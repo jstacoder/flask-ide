@@ -1,0 +1,144 @@
+{% extends 'admin.html' %}
+{% from '_macros.html' import render_panel_form with context %}
+{% from 'buttons2.html' import get_button as Button %}
+    {% block extra_head %}
+            {#<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+            <script type="text/javascript">
+                tinymce.init({
+                    selector: "textarea"
+                    });
+            </script>#}
+        <style>
+            #editor {
+                height:300px;
+                width:400px;
+            }
+            .flask-pagedown-input {
+            }
+            .flask-pagedown-preview {
+                    border: 1px dotted black;
+                    background-color: #f0f0f0;
+                    }
+        </style>
+        <link rel=stylesheet href="{{url_for('static',filename='css/bootstrap-select.css')}}" />
+    {% endblock extra_head %}
+    {% block body %}
+        {% if obj %}
+            {% if obj.content %}
+                <div id="text" style="display:none;">
+                    {{ obj.content }}
+                </div>
+            {% endif %}
+        {% endif %}
+        {% if form %}
+        <div class=well>
+            {% if call_form %}
+                {% call render_panel_form(form) %}
+                
+                {% endcall %}
+            {% else %}
+                {% if form_args %}
+                    {{ render_panel_form(form,**form_args) }}
+                {% else %}
+                    {{ render_panel_form(form) }}
+                {% endif %}
+            {% endif %}
+            {% if use_editor %}
+                <div id="editor">{% if 'admin.edit_block' == request.endpoint %}{{ get_model('static_block','page').get_by_id(request.view_args.get('item_id')).content|safe }}{% endif %}</div>           
+                {% for f in form %} 
+                    {% if f.type == 'submit' %}
+                        {% set submit = true %}
+                    {% endif %}
+                {% endfor %}
+                        {#{% for t in f %}
+                        {#{{ t.type }}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}#}
+            {% endif %}            
+       </div>
+       {% if not submit is defined %}
+        {% endif %}
+        {% endif %}
+        {% endblock %}
+        {% block footer_js %}
+        {{ super() }}
+        <script src="http://cdn.jsdelivr.net/ace/1.1.7/noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="http://cdn.jsdelivr.net/ace/1.1.7/noconflict/mode-python.js" type="text/javascript" charset="utf-8"></script>
+        <script src="http://cdn.jsdelivr.net/ace/1.1.7/noconflict/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
+        <!--<script src="{{url_for('static',filename='js/ace/ace.js')}}" type="text/javascript" charset="utf-8"></script>
+		<script src="{{url_for('static',filename='js/ace/mode-python.js')}}" type="text/javascript" charset="utf-8"></script>
+		<script src="{{url_for('static',filename='js/ace/theme-twilight.js')}}" type="text/javascript" charset="utf-8"></script>-->
+        <script src="{{url_for('static',filename='js/bootstrap-select.js')}}" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                    $("#icon").selectpicker();
+                    $("<div id='content2'>").insertAfter($(".form-group").eq(1));
+                    $("#content").remove();
+    				var editor  = ace.edit($("#editor")[0]);
+              		editor.setTheme("ace/theme/twilight");
+              		editor.getSession().setMode("ace/mode/python");
+                /*if($("#text").length > 1)
+                    var t = $("#text").text();
+                    if($(t).length > 0){
+                    CKEDITOR.instances.body_body.insertHtml(t);
+                }
+        /*        var editor_for_body_body = CodeMirror.fromTextArea(
+                    document.getElementById("body-body"),
+                    {value:t,lineNumbers:true,mode:"htmlmixed",language:"python"}
+                    );
+                    editor_for_body_body.setValue(t);*/
+
+//                var editor = ace.edit("editor");
+  //              editor.setTheme("ace/theme/twilight");
+    //            editor.getSession().setMode("ace/mode/javascript");
+                /*
+                $("#base_template").on("change",function(){
+                    var f = $(this).val();
+                    var res = $.getJSON(
+                        '/admin/get/template',{'filename':f}
+                    );
+                    if(res['result'] == 'success') {
+                        editor.setValue(res['content']);
+                        };
+                    });
+                });
+        $(".close").click(function(){
+            $(".myModal").hide();    
+        });
+        $(".edit").click(function(){
+                var modal = $("<div>").addClass("modal-fade")
+                                        .addClass("myModal")
+                                        .attr("id","myModal")
+                                        .append($("<div>").addClass("modal-dialog")
+                                            .append($("<div>").addClass("modal-content")
+                                                .append($("<div>").addClass("modal-header")
+                                                    .append($("<button>").addClass("close")
+                                                        .attr("data-dismiss","#myModal")
+                                                        .attr("data-toggle","modal")
+                                                        //.attr("data-target","#myModal")
+                                                        .append($("<span>")
+                                                            .attr("aria-hidden",true)
+                                                            .html("&times;"))
+                                                        .append($("<span>")
+                                                            .addClass("sr-only")
+                                                            .text("close")))
+                                                    .append($("<h4>").addClass("modal-title")
+                                                        .text("title")))
+                                                .append($("<div>").addClass("modal-body")
+                                                    .append($("<p>").text("my modal")))
+                                                .append($("<div>").addClass("modal-footer")
+                                                    .append($("<button>").addClass("btn")
+                                                        .addClass("btn-default")
+                                                        .attr("data-dismiss","myModal")
+                                                        .text("close")
+                                                        .attr("type","button"))
+                                                    .append($("<button>").addClass("btn")
+                                                        .addClass("btn-primary")
+                                                        .text("save"))))).appendTo($("body"));
+        $(".myModal").hide();
+        $(".myModal").show();*/
+        });
+        </script>
+        <script src="{{url_for('static',filename='js/save.js')}}" type="text/javascript" charset="utf-8"></script>
+        {% endblock footer_js %}

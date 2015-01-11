@@ -1,0 +1,87 @@
+{% extends base or 'layout.hmtl' %} {% block body %}
+
+<div class="container-fluid wide">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row" style="height:760px">
+                <div class="col-md-2 sidebar" style="height:760px">
+                    {% block column_5 %} {% endblock column_5 %}
+                </div>
+                <div class="col-md-5" style="height:760px">
+                    {% block column_6 %} {% endblock column_6 %}
+                </div>
+                <div class="col-md-5" style="height:760px">
+                    {% block column_7 %} {% endblock column_7 %}
+                </div>
+            </div>
+            <div class="row" style="height:150px">
+                <div class="col-md-3" style="height:150px">
+                    {% block column_1 %} {% endblock column_1 %}
+                </div>
+                <div class="col-md-3" style="height:150px">
+                    {% block column_2 %} {% endblock column_2 %}
+                </div>
+                <div class="col-md-3" style="height:150px">
+                    {% block column_3 %} {% endblock column_3 %}
+                </div>
+                <div class="col-md-3" style="height:150px">
+                    {% block column_4 %} {% endblock column_4 %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_head %}
+ <style type="text/css">
+    div {
+        text-align:center;
+    }
+    .row > div {
+        border: 1px solid darkgrey;
+        height:100;
+    }
+    .row {
+        min-height:100px;
+    }
+    div.row > div  {
+        min-height:100px;
+    }
+    @media (min-width: 600px)  {
+        .container {
+            width: 900px;
+        }
+    }
+    @media (min-width: 1700px)  {
+        .container {
+            width: 1750px;
+        }
+    }
+    .container-fluid.wide {
+        width: 95%
+    }
+    .sidebar {
+        padding-left:0px;
+        padding-right:0px;
+    }
+</style>
+{% endblock %}
+{% block footer_js %}
+    {{ super() }}
+    <script>
+        $(".menu1").on("click",function() {
+            if(!$(this).hasClass("nav-header")){
+                if(!$(this).hasClass("active")){
+                    $(".menu1").removeClass("active");
+                    $(this).addClass("active");
+                    
+        });
+        $(".menu2").on("click",function() {
+            if(!$(this).hasClass("nav-header")){
+                if(!$(this).hasClass("active")){
+                    $(".menu2").removeClass("active");
+                    $(this).addClass("active");
+
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,256 @@
+{% extends base %}
+{% macro container(fluid=true) %}
+    <div class="container{% if fluid %}-fluid{% endif %}">
+         {{ caller() }}
+    </div>
+{% endmacro %}
+
+
+{% macro row() %}
+    <div class="row">
+         {{ caller() }}
+    </div>
+{% endmacro %}
+
+
+{% macro col() %}
+<div class="{{ kwargs.pop('class_') }}"{% if kwargs %}{% for k,v in kwargs.items() %} {{k}}="{{v}}"{% endfor %}{% endif %}>
+         {{ caller() }}
+    </div>
+{% endmacro %}
+
+{% macro panel(title='',type='default',use_body=true,footer=false) %}
+    <div class="panel panel-{{ type }}"{% if kwargs %}{% for k,v in kwargs.items() %} {{k}}="{{v}}"{% endfor %}{% endif %}>
+        {% if title != '' %}
+           <div class="panel-heading">
+            {% if title != '' %}
+                <h2 class="panel-title">
+                    {{ title }}
+                </h2>
+            {% endif %}
+            </div>
+        {% endif %}
+        {% if use_body %}
+            <div class="panel-body">    
+        {% endif %}
+                {{ caller() }}
+        {% if use_body %}
+            </div>
+        {% endif %}
+        {% if footer %}
+            {{ footer }}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% block content %}
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+    <nav id="myNavmenu" class="navmenu navmenu-default navmenu-fixed-left offcanvas" role="navigation">
+      <a class="navmenu-brand" href="#">Brand</a>
+        <ul class="nav navmenu-nav">
+            <li class="add-row active"><a href="#">Add Row</a></li>
+            <li><a id="left-link" href="#">Toggle LeftBar</a></li>
+            <li><a id="right-link" href="#">Toggle RightBar</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                <ul class="dropdown-menu navmenu-nav" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+
+    <div class="navbar navbar-default navbar-fixed-top">
+          <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target="#myNavmenu" data-canvas="body">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+          </button>
+    </div>
+    {% call container() %}
+        {% call row() %}
+            {% call col(class_='col-md-12') %}
+                {% call row() %}
+                    {% call col(class_='col-md-2 sidebar sidebar-right') %}
+                                {% call panel(title='',style="height:500px;") %}
+                                    <p>sidebar</p>
+                                {% endcall %}
+                    {% endcall %}
+                    {% call col(class_='col-md-8 main') %}
+                        {% call row() %}
+                            {% call col(class_='col-md-2') %}
+                                {% call panel(title='') %}
+                                    <p>col-md-2</p>
+                                {% endcall %}
+                            {% endcall %}
+                            {% call col(class_='col-md-10') %}
+                                {% call panel(title='') %}
+                                    <p>col-md-10</p>
+                                {% endcall %}
+                            {% endcall %}
+                        {% endcall %}
+                        {% call row() %}
+                            {% call col(class_='col-md-3') %}
+                                {% call panel(title='') %}
+                                    <p>col-md-3</p>
+                                {% endcall %}
+                            {% endcall %}
+                            {% call col(class_='col-md-9') %}
+                                {% call panel(title='') %}
+                                    <p>col-md-9</p>
+                                {% endcall %}
+                            {% endcall %}
+                        {% endcall %}
+                        {% call row() %}
+                            {% call col(class_='col-md-4') %}
+                                {% call panel(title='') %}
+                                    <p>col-md-4</p>
+                                {% endcall %}
+                            {% endcall %}
+                            {% call col(class_='col-md-8') %}
+                                {% call panel(title='') %}
+                                    <p>col-md-8</p>
+                                {% endcall %}
+                            {% endcall %}
+                        {% endcall %}
+                        {% call row() %}
+                            {% call col(class_='col-md-5') %}
+                                {% call panel(title='') %}
+                                    <p>col-md-5</p>
+                                {% endcall %}
+                            {% endcall %}
+                            {% call col(class_='col-md-7') %}
+                                {% call panel(title='') %}
+                                    <p>col-md-7</p>
+                                {% endcall %}
+                            {% endcall %}
+                        {% endcall %}
+                        {% call row() %}
+                            {% call col(class_='col-md-6') %}
+                                {% call panel(title='') %}
+                                    <p>col-md-6</p>
+                                {% endcall %}
+                            {% endcall %}
+                            {% call col(class_='col-md-6') %}
+                                {% call panel(title='') %}
+                                    <p>col-md-6</p>
+                                {% endcall %}
+                            {% endcall %}
+                        {% endcall %}
+                        {% call row() %}
+                            {% call col(class_='col-md-12') %}
+                                {% call panel(title='') %}
+                                    <p>col-md-12</p>
+                                {% endcall %}
+                            {% endcall %}
+                        {% endcall %}
+                    {% endcall %}
+                    {% call col(class_='col-md-2 sidebar sidebar-left',style='height:500px;') %}
+                                {% call panel(title='',style="height:500px;") %}
+                                    <p>sidebar</p>
+                                {% endcall %}
+                    {% endcall %}
+                {% endcall %}
+            {% endcall %}
+        {% endcall %}
+        {% call row() %}
+        {% call col(class_='col-md-12') %}
+                <div class="footer">
+                    <hr />
+                    <p>footer</p>
+                </div>
+            {% endcall %}
+        {% endcall %}
+    {% endcall %}
+{% endblock %}
+{% block footer_js %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
+<script>
+
+function makeDropDown(title,links){
+    
+    var dm = $("<ul class='dropdown-menu navmenu-nav' role='menu'>");
+    $.each(links,function(idx){
+        dm.append($("<li>").append($("<a>"+links[idx].text+"</a>").attr("href",links[idx].href)))
+    });
+
+    var dd = $("<li class='dropdown'>")
+            .append(
+                    $("<a class='dropdown-toggle' data-toggle='dropdown'>"+title+"</a>")
+                .append(
+                    $("<b class='caret'>")
+                 )
+            ).append(dm);
+    return dd;
+}
+                                          
+function hidebar(side){
+
+    var $side = $(".sidebar-"+side),
+    $main = $(".main"),
+    mClass = $main.hasClass("col-md-8") ? "col-md-8" : "col-md-10",
+    newMClass = mClass == 'col-md-8' ? "col-md-10" : "col-md-12";
+
+    if($side.css("display") != 'none'){
+        $main.removeClass(mClass).addClass(newMClass);
+        $side.addClass("hidden").hide();
+    }
+}
+
+function showbar(side){
+    var $side = $(".sidebar-"+side),
+    $main = $(".main"),
+    mClass = $main.hasClass("col-md-10") ? "col-md-10" : "col-md-12",
+    newMClass = mClass == "col-md-10" ? "col-md-8" : "col-md-10";
+
+    if($side.css("display") == 'none'){
+        $main.removeClass(mClass).addClass(newMClass);
+        $side.removeClass("hidden").show();
+    }
+}
+
+function addRowLink(){
+    var links = [
+        {text:'1',href:'xxx'},
+        {text:'2',href:'xxx'},
+        {text:'3',href:'xxx'},
+        {text:'4',href:'xxx'}
+    ],
+    num = $(".dropdown").length,
+    dropdown = makeDropDown('Row '+String(num),links);
+    $(dropdown).insertAfter($(".dropdown").eq($(".dropdown").length-1));
+
+}
+
+function toggleBar(side){
+    if($(".sidebar-"+side).hasClass("hidden")){
+        showbar(side);
+    } else {
+        hidebar(side);
+    }
+}
+$(function(){
+    $(document).on("click","#left-link",function(){
+        toggleBar("left");
+    });
+    $(document).on("click","#right-link",function(){
+        toggleBar("right");
+    });
+    $(document).on("click",".add-row",function(){
+        addRowLink();
+    });
+    $(".navbar-toggle").css("float","left").show();
+    $(".dropdown").hide();
+
+});
+
+</script>
+{% endblock %}

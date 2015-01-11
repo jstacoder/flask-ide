@@ -1,0 +1,23 @@
+{% extends base %}
+
+
+{% block content %}
+    {{ form.editor(height="400px") }} 
+{% endblock %}
+{% block er_js %}
+    <script>
+    $(
+    (function(){
+
+        var content = $("body")[0].innerHTML;
+        $("body").empty();
+        $("body").append(
+                $("<div>").addClass("panel").addClass("panel-default")
+                    .append($("<div>").addClass("panel-heading").text("File Editor"))
+                    .append($("#editor"))
+                    .append($("<div>").addClass("panel-footer"))
+            );   
+        $("body").append(content);
+        })();
+    </script>
+{% endblock %}

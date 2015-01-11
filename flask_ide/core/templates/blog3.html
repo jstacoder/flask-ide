@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Complete blog layout - Bootsnipp.com</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <style type="text/css">
+    body#blog-body {
+    margin-top: 100px; /* 100px is double the height of the navbar - I made it a big larger for some more space - keep it at 50px at least if you want to use the fixed top nav */
+}
+
+footer {
+	margin: 50px 0;
+}
+
+
+
+.vid {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px; height: 0; overflow: hidden;
+}
+
+.vid iframe,
+.vid object,
+.vid embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.comment-title,
+.comment-image {
+	display:inline-block;      
+}
+.comment-text {
+	margin-left: 100px;      
+}
+
+      
+
+
+.cuadro_intro_hover{
+        padding: 0px;
+		position: relative;
+		overflow: hidden;
+		height: 200px;
+	}
+	.cuadro_intro_hover:hover .caption{
+		opacity: 1;
+		transform: translateY(-150px);
+		-webkit-transform:translateY(-150px);
+		-moz-transform:translateY(-150px);
+		-ms-transform:translateY(-150px);
+		-o-transform:translateY(-150px);
+	}
+	.cuadro_intro_hover img{
+		z-index: 4;
+	}
+	.cuadro_intro_hover .caption{
+		position: absolute;
+		top:150px;
+		-webkit-transition:all 0.3s ease-in-out;
+		-moz-transition:all 0.3s ease-in-out;
+		-o-transition:all 0.3s ease-in-out;
+		-ms-transition:all 0.3s ease-in-out;
+		transition:all 0.3s ease-in-out;
+		width: 100%;
+	}
+	.cuadro_intro_hover .blur{
+		background-color: rgba(0,0,0,0.7);
+		height: 300px;
+		z-index: 5;
+		position: absolute;
+		width: 100%;
+	}
+	.cuadro_intro_hover .caption-text{
+		z-index: 10;
+		color: #fff;
+		position: absolute;
+		height: 300px;
+		text-align: center;
+		top:-20px;
+		width: 100%;
+	}
+    </style>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        window.alert = function(){};
+        var defaultCSS = document.getElementById('bootstrap-css');
+        function changeCSS(css){
+            if(css) $('head > link').filter(':first').replaceWith('<link rel="stylesheet" href="'+ css +'" type="text/css" />');
+            else $('head > link').filter(':first').replaceWith(defaultCSS);
+        }
+        $( document ).ready(function() {
+          var iframe_height = parseInt($('html').height());
+          window.parent.postMessage( iframe_height, 'http://bootsnipp.com');
+        });
+    </script>
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+        <!-- Bootstrap core CSS -->
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.css" rel="stylesheet">
+    <!-- Add custom CSS here -->
+</head>
+<body id="blog-body">
+{#<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="">Blog Post</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href=""><i class="fa fa-home"></i> Home</a>
+                    </li>
+                    <li class="active"><a href=""><i class="fa fa-book"></i> Posts</a>
+                    </li>
+                    <li><a href=""><i class="fa fa-envelope"></i> Contact</a>
+                    </li>
+					<li><a href=""><i class="fa fa-user"></i> About</a>
+                    </li>
+					<form class="navbar-form navbar-right">
+                          <input type="text" class="form-control col-lg-8" placeholder="Search...">
+                    </form>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>#}
+    {% include _get_navbar('bootstrap-inverse') with context %}
+    {% include "includes/_messages.html" with context %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- the actual blog post: title/author/date/content -->
+                <h1><a href="">Blog Post Template for Bootstrap</a></h1>
+                <p class="lead"><i class="fa fa-user"></i> by <a href="">Super User</a>
+                </p>
+                <hr>
+                <p><i class="fa fa-calendar"></i> Posted on August 24, 2014 at 9:00 PM</p>
+				<p><i class="fa fa-tags"></i> Tags: <a href=""><span class="badge badge-info">Bootstrap</span></a> <a href=""><span class="badge badge-info">Web</span></a> <a href=""><span class="badge badge-info">CSS</span></a> <a href=""><span class="badge badge-info">HTML</span></a></p>
+                <hr>
+                <img src="http://placehold.it/900x300" class="img-responsive">
+                <hr>
+                <p class="lead">Welcome to Bootstrap Blog Template! This is a blog template example, built with Bootstrap. Contains "tools" that would be needed in a post.</p>
+                <p>Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor.</p>
+                <p>Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor. Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor.</p>
+                <p>Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor. Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor.</p>
+                <p>Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor. Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor.</p>
+                <br/>
+				<center><p><strong>Embed Twitter post:</strong>
+
+				<!-- Place this tag in your head or just before your close body tag. -->
+<blockquote class="twitter-tweet" lang="hu"><p>Thousands of code samples at your fingertips! Literally, thousands: <a href="http://t.co/aHrsBZ7plp">http://t.co/aHrsBZ7plp</a> (via <a href="https://twitter.com/ch9">@ch9</a>) <a href="http://t.co/94CQJLOCzO">pic.twitter.com/94CQJLOCzO</a></p>&mdash; Microsoft Developer (@msdev) <a href="https://twitter.com/msdev/statuses/487959572230193152">2014. lius 12.</a></blockquote>
+<script async src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</center>
+<br/>
+ <center><p><strong>Embed Youtube player:</strong> </center>
+
+            <div class="vid">
+<iframe width="560" height="315" src="http://www.youtube.com/embed/bsPUMZlsZP8" frameborder="0" allowfullscreen></iframe>
+</div>
+<br/>
+<p><h3>This Youtube Player is responsive!</h3></p>
+<p>Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor.</p>
+<blockquote>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+  <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
+</blockquote>
+<p><h4>I like the post? Like this!</h4></p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<div class="g-plusone" data-annotation="inline" data-width="300" data-href=""></div>
+
+<!-- Helyezd el ezt a az utols +1 gomb cmke mg. -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/platform.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+<br/>
+                <hr>
+
+                <!-- the comment box -->
+                <div class="well">
+                    <h4><i class="fa fa-comment-o"></i> Leave a Comment:</h4>
+                    <form role="form">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-reply"></i> Submit</button>
+                    </form>
+                </div>
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+                <hr>
+
+                <!-- the comments -->
+      			<img class="comment-image" src="http://placehold.it/50x45" / >
+                <h3 class=comment-title> User One says:
+                </h3>
+                <p class=comment-text>Excellent post! Thank You the great article, it was useful!</p>
+                <h3><small> 9:41 PM on August 24, 2014</small></h3>
+                <hr />
+
+				<img class="comment-image" src="http://placehold.it/50x45" / >
+                <h3 class=comment-title> User Two says:
+                </h3>
+                <p class=comment-text>Excellent post! Thank You the great article, it was useful!</p>
+                <h3><small> 9:47 PM on August 24, 2014</small></h3>
+                <hr />
+            </div>
+
+            <div class="col-lg-4">
+                <div class="well">
+                    <h4><i class="fa fa-search"></i> Blog Search...</h4>
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <!-- /input-group -->
+                </div>
+                <!-- /well -->
+                <div class="well">
+                    <h4><i class="fa fa-tags"></i> Popular Tags:</h4>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <ul class="list-unstyled">
+                                <li><a href=""><span class="badge badge-info">Windows 8</span></a>
+                                </li>
+                                 <li><a href=""><span class="badge badge-info">C#</span></a>
+                                </li>
+                                 <li><a href=""><span class="badge badge-info">Windows Forms</span></a>
+                                </li>
+                                 <li><a href=""><span class="badge badge-info">WPF</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <ul class="list-unstyled">
+                                <li><a href=""><span class="badge badge-info">Bootstrap</span></a>
+                                </li>
+                                 <li><a href=""><span class="badge badge-info">Joomla!</span></a>
+                                </li>
+                                 <li><a href=""><span class="badge badge-info">CMS</span></a>
+                                </li>
+                                 <li><a href=""><span class="badge badge-info">Java</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+				<!-- /well -->
+				<div class="well">
+                    <h4><i class="fa fa-thumbs-o-up"></i> Follow me!</h4>
+					<ul>
+                    <p><a title="Facebook" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x"></i></span></a> <a title="Twitter" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-twitter fa-stack-1x"></i></span></a> <a title="Google+" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-google-plus fa-stack-1x"></i></span></a> <a title="Linkedin" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-linkedin fa-stack-1x"></i></span></a> <a title="GitHub" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-github fa-stack-1x"></i></span></a> <a title="Bitbucket" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-bitbucket fa-stack-1x"></i></span></a></p>
+					</ul>
+                </div>
+				<!-- /well -->
+                <!-- /well -->
+                <div class="well">
+                    <h4><i class="fa fa-fire"></i> Popular Posts:</h4>
+					<ul>
+                    <li><a href="">WPF vs. Windows Forms-Which is better?</a></li>
+					<li><a href="">How to create responsive website with Bootstrap?</a></li>
+					<li><a href="">The best Joomla! templates 2014</a></li>
+					<li><a href="">ASP .NET cms list</a></li>
+			        <li><a href="">C# Hello, World! program</a></li>
+					<li><a href="">Java random generator</a></li>
+					</ul>
+                </div>
+                <!-- /well -->
+
+				<!-- /well -->
+                <div class="well">
+                    <h4><i class="fa fa-book"></i> Featured books:</h4>
+                    <div class="row">
+
+                            <div class="col-lg-12">
+    				<div class="cuadro_intro_hover " style="background-color:#cccccc;">
+						<p style="text-align:center; margin-top:20px;">
+							<img src="http://placehold.it/500x330" class="img-responsive" alt="">
+						</p>
+						<div class="caption">
+							<div class="blur"></div>
+							<div class="caption-text">
+								<h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:10px;">Book 1</h3>
+								<p>Loren ipsum dolor si amet ipsum dolor si amet ipsum dolor...</p>
+								<a class=" btn btn-default" href="#"><i class="fa fa-plus"></i> INFO</span></a>
+
+							</div>
+						</div>
+					</div>
+
+	    </div>
+
+		<div class="col-lg-12">
+    				<div class="cuadro_intro_hover " style="background-color:#cccccc;">
+						<p style="text-align:center; margin-top:20px;">
+							<img src="http://placehold.it/500x330" class="img-responsive" alt="">
+						</p>
+						<div class="caption">
+							<div class="blur"></div>
+							<div class="caption-text">
+								<h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:10px;">Book 2</h3>
+								<p>Loren ipsum dolor si amet ipsum dolor si amet ipsum dolor...</p>
+								<a class=" btn btn-default" href="#"><i class="fa fa-plus"></i> INFO</span></a>
+
+							</div>
+						</div>
+					</div>
+
+	    </div>
+                        </div>
+
+
+                </div>
+                <!-- /well -->
+
+
+            </div>
+        </div>
+
+
+        <hr>
+
+    <footer>
+            <div class="row">
+                <div class="col-lg-12">
+    			<div class="col-lg-3 col-md-6">
+                <div class="container">
+
+
+    	<div class="col-lg-3">
+    				<div class="cuadro_intro_hover " style="background-color:#cccccc;">
+						<p style="text-align:center; margin-top:20px;">
+							<img src="http://placehold.it/500x330" class="img-responsive" alt="">
+						</p>
+						<div class="caption">
+							<div class="blur"></div>
+							<div class="caption-text">
+								<h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:10px;">THIS IS H3</h3>
+								<p>Loren ipsum dolor si amet ipsum dolor si amet ipsum dolor...</p>
+								<a class=" btn btn-default" href="#"><span class="glyphicon glyphicon-plus"> INFO</span></a>
+							</div>
+						</div>
+					</div>
+
+	    </div>
+       <div class="col-lg-3">
+    				<div class="cuadro_intro_hover " style="background-color:#cccccc;">
+						<p style="text-align:center; margin-top:20px;">
+							<img src="http://placehold.it/500x330" class="img-responsive" alt="">
+						</p>
+						<div class="caption">
+							<div class="blur"></div>
+							<div class="caption-text">
+								<h3 style="border-top:2px solid white; border-bottom:2px solid white; padding:10px;">THIS IS H3</h3>
+								<p>Loren ipsum dolor si amet ipsum dolor si amet ipsum dolor...</p>
+								<a class=" btn btn-default" href="#"><span class="glyphicon glyphicon-plus"> INFO</span></a>
+							</div>
+						</div>
+					</div>
+
+	    </div>
+
+
+            <div class="col-lg-3 col-md-6">
+			<h3>Categories:</h3>
+                <ul>
+				<li><a href=""><i class="fa fa-file"></i> News</a></li>
+				<li><a href=""><i class="fa fa-android"></i> Android</a></li>
+				<li><a href=""><i class="fa fa-code"></i> C#</a></li>
+				<li><a href=""><i class="fa fa-code"></i> Java</a></li>
+				<li><a href=""><i class="fa fa-book"></i> Books</a></li>
+				<li><a href=""><i class="fa fa-globe"></i> Web</a></li>
+				<li><a href=""><i class="fa fa-windows"></i> Windows</a></li>
+				</ul>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <h3>Contact:</h3>
+				<p>Have a question or feedback? Contact me!</p>
+				<p><a href="" title="Contact me!"><i class="fa fa-envelope"></i> Contact</a></p>
+            <h3>Follow:</h3>
+
+
+<a href="" id="gh" target="_blank" title="Twitter"><span class="fa-stack fa-lg">
+  <i class="fa fa-square-o fa-stack-2x"></i>
+  <i class="fa fa-twitter fa-stack-1x"></i>
+</span>
+Twitter</a>
+<a href=""  target="_blank" title="GitHub"><span class="fa-stack fa-lg">
+  <i class="fa fa-square-o fa-stack-2x"></i>
+  <i class="fa fa-github fa-stack-1x"></i>
+</span>
+GitHub</a>
+
+
+
+
+
+
+			</div>
+			<br/>
+
+
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<div class="g-plusone" data-annotation="inline" data-width="300" data-href=""></div>
+
+<!-- Helyezd el ezt a cmkt az utols +1 gomb cmke mg. -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/platform.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+    </script>
+			<br/>
+				<hr>
+        <footer>
+                    <p>Copyright  Your Website | <a href="">Privacy Policy</a> | <a href="">Terms of Use</a></p>
+        </footer>
+    </div>
+        <!-- /.container -->
+    <!-- JavaScript -->
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.js"></script>
+    </body>
+</html>

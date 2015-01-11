@@ -1,0 +1,56 @@
+
+
+themes = (
+    '3024-night',
+    'ambiance-mobile',
+    'ambiance',
+    'base16-dark',
+    'base16-light',
+    'blackboard',
+    'cobalt',
+    'eclipse',
+    'elegant',
+    'erlang-dark',
+    'lesser-dark',
+    'mbo',
+    'mdn-like',
+    'midnight',
+    'monokai',
+    'neat',
+    'neo',
+    'night',
+    'paraiso-dark',
+    'paraiso-light',
+    'pastel-on-dark',
+    'rubyblue',
+    'solarized',
+    'the-matrix',
+    'tomorrow-night-eighties',
+    'twilight',
+    'vibrant-ink',
+    'xq-dark',
+    'xq-light',
+)
+
+modes = (
+    'apl','asterisk','clike',
+    'clojure','cobol','coffeescript',
+    'commonlisp','css','cypher',
+    'd','django','diff','dtd','dylan',
+    'ecl','eiffel','erlang','fortran',
+    'gas','gfm','gherkin','go','groovy',
+    'haml','haskell','htmlembedded','htmlmmixed',
+    'http','java','jade','javaScript','jinja2',
+    'Julia','kotlin','LESS','LiveScript','Lua',
+    'Markdown','mIRC','Modelica','Nginx','NTriples',
+    'OCaml','Octave','Pascal','PEG.js','Perl','PHP',
+    'Pig Latin','Properties files','Puppet','Python',
+    'q','R','RPM','reStructuredText','Ruby','Rust',
+    'Sass','Scala','Scheme','SCSS','Shell','Sieve','Slim',
+    'Smalltalk','Smarty','Solr','SQL','SPARQL','LaTeX',
+    'Tcl','Textile','Tiddlywiki','TOML','Tornado','Turtle',
+    'VB.NET','VBScript','Velocity','Verilog','XML','HTML','XQuery',
+    'YAML','Z80'
+)
+
+

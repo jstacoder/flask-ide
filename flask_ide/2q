@@ -1,0 +1,61 @@
+# -*- coding: utf-8 -*-
+
+"""
+    core blueprint for flask-cms
+"""
+
+from sqlalchemy.ext.declarative import declared_attr,declarative_base
+from sqlalchemy import UniqueConstraint,Column,Integer,Text,String,Date,DateTime,ForeignKey,func,create_engine
+from sqlalchemy.orm import backref, relationship,sessionmaker, scoped_session
+from LoginUtils import encrypt_password as generate_password_hash
+from LoginUtils import check_password as check_password_hash
+import sys
+import os
+print os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+
+print '\n'.join(sys.path)
+from settings import BaseConfig
+
+
+
+base = declarative_base()
+engine = create_engine(BaseConfig.SQLALCHEMY_DATABASE_URI)
+Session = scoped_session(sessionmaker(bind=engine))
+
+
+get_session = lambda: Session()
+
+
+class Model(base):
+    _session = None
+    __abstract__ = True
+
+    @declared_attr
+    def id(self):
+        return Column(Integer,primary_key=True)
+
+    @property
+    def session(self):
+        if self._session is None:
+            self._session = get_session()
+        return self._session
+
+    @classmethod
+    def query(cls):
+        return Model.session.query(cls)
+
+    def save(self):
+        self.session.add(self)
+        self.session.commit()
+
+class Server(Model):
+    __tablename__ = 'servers'
+    __table_args__ = (
+        (UniqueConstraint('name','ip_address'),),
+    )
+    
+
+    ip_address = Column(String(20),nullable=False,unique=True)
+    name = Column(String(255),unique=True)
+
+

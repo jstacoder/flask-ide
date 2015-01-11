@@ -1,0 +1,14 @@
+<form method="post" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <input type="submit" name="submit" />
+</form>
+{% if f %}
+{{ f }}
+{{ dir(f) }}
+{{ dir(f['files']) }}
+{{ f['files'] }}
+{#<!--<p>content type: {{ f['files'].__dict__['content-type'] }}</p>
+<p>mime-type: {{ f['files'].save(f['file'].filename) }}</p>
+<p>filename: {{ f['files'].filename }}</p>
+<p>Name: {{ f['files'].name }}</p>-->#}
+{% endif %}

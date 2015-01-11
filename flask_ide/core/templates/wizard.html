@@ -1,0 +1,131 @@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
+            </div> 
+            <div class="modal-body">
+                <h4>Text in a modal</h4>
+                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+                <h4>Popover in a modal</h4>
+                <p>This <a href="#" role="button" class="btn btn-default popover-test" title="A Title" data-content="And here's some amazing content. It's very engaging. right?">button</a> should trigger a popover on click.</p>
+                <h4>Tooltips in a modal</h4>
+                <p><a href="#" class="tooltip-test" title="Tooltip">This link</a> and <a href="#" class="tooltip-test" title="Tooltip">that link</a> should have tooltips on hover.</p>
+                <hr>
+                <h4>Overflowing text to show scroll behavior</h4>
+                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="save" class="btn btn-primary">Save changes</button>
+            </div>
+            
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<h1 class=col-group id=cols2></h1>
+<h1 class=col-group id=cols1></h1>
+<div class="bs-example" style="padding-bottom: 24px;display:inline;">
+    <button id="mainBtn" class="mbtn btn btn-primary" row=1>
+        Single Row
+    </button>
+</div><!-- /example -->
+<div class="bs-example" style="padding-bottom: 24px;display:inline;">
+    <button id="mainBtn2" class="mbtn btn btn-primary" row=2>
+        Dual Row
+    </button>
+    <p>with footer</p>
+</div><!-- /example -->
+<input id="choice1" type="hidden" value="" />
+<input id="choice2" type="hidden" value="" />
+<input id="choice3" type="hidden" value="" />
+<input id="choice4" type="hidden" value="" />
+
+<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<script>
+    function make_input(){
+        return $("<input type='text'/>");
+    }
+    $(document).on("click",".mbtn",function(e){        
+            e.preventDefault();
+            $("input#choice1").val($(this).attr("row"));                
+            if(!$("#step1").length){
+                //$("#modal2").modal({remote:'/json?&step=1'});
+                var row_num = $(this).attr("row");               
+                var itm = $.getJSON('/json',{step:"1",rows:row_num}).done(
+                                function (data) {
+                                    console.log(data);
+                                    var x = $("<div id='step1'>" + data['html'] + "</div>").appendTo($(".bs-example").eq(1));     
+                                    return x;
+                                }                                
+                            );      
+                if(parseInt($(this).attr("row")) === 2){
+                $(itm).clone().attr("id","step1b").insertAfter($(itm));
+                    }
+                }
+            });            
+    $(document).on("click",".step1-choice",function(){
+            $("input#choice2").val($(this).attr("cols"));
+            if(!$(".col-group").eq($(".step1-choice").index($(this))).length){
+                var cols = $(this).attr("cols");
+                $(".col-group").eq($(".step1-choice").index($(this))).text(cols);
+            }
+            if(!$("#step2").length){
+            var res = $.getJSON('/json',{step:"2"}).done(function(data){
+                $(".step1-choice").eq($(".step1-choice").index($(this))).append($("<div id='step2'>" + data['html'] + "</div>"));
+                console.log(res);
+            });   
+            $("#modal2 > div > div").html(res.responseText);
+            //$("#modal2").modal({remote:'/json?&step=3'});
+            //$("#modal2").modal('show');
+            
+        }
+    });
+
+    $(document).on("click",".step2-choice",function(){
+            $("input#choice3").val($(this).attr("height"));
+            if(!$("#step3").length){
+            $.getJSON('/json',{step:"3"}).done(function(data){
+                $("#step2").eq(0).append($("<div>" + data['html'] + "</div>"));
+            });
+        }
+    });
+</script>
+

@@ -1,0 +1,71 @@
+{% extends base %}
+{% from 'forms.html' import form_group %}
+{% import '_tag_macros.html' as _tags with context %}
+{% macro content() %}
+    <h2 class=page-header>hi</h2>
+{% endmacro %}
+
+{% block messages %}
+        {% include 'includes/_messages.html' %}
+{% endblock %}
+{% block content %}
+    <div class=col-md-8>
+    {% if accounts %}
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th>Server</th>
+                    <th>Server Name</th>
+                    <th>Username</th>
+                    <th>base dir</th>
+                    <th>last login</th>
+                    <th>Login</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for account in accounts %}
+                    <tr>
+                        {% for itm in [account.server.ip_address,account.server.name,account.username,account.base_dir] %}
+                            <td>
+                                {{ itm }}
+                            </td>
+                        {% endfor %}
+                        <td>xxx</td>
+                        <td><a href="#" class="btn btn-sm btn-default">login</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    </div>
+    <div class=col-md-4>
+    {% if form %}
+    <form action='' method="post" class=form>
+        <legend>Add Server</legend>
+        {% for f in form %}            
+            {% if form.hidden_tag is defined %}
+                {{ form.hidden_tag() }}
+            {% endif %}
+            {% if not f.type == 'FieldList' and not f.type == 'HiddenField' and not f.type == 'CSRFTokenField' %}
+                {% call form_group(f.label.text) %}
+                    {{ f(class_='form-control') }}
+                {% endcall %}
+            {% else %}
+                {% for _form in f %}
+                    <fieldset>
+                        <legend>Add Account</legend>
+                    {% for subfield in _form %}
+                        {% if not subfield.type == 'HiddenField' and not subfield.type == 'CSRFTokenField' %}
+                            {% call form_group(subfield.label.text) %}
+                                {{ subfield(class_='form-control') }}
+                            {% endcall %}
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+               </fieldset>
+            {% endif %}        
+        {% endfor %}
+    </form>
+    {% endif %}
+    </div>
+{% endblock %}

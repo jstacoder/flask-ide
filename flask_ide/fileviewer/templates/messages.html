@@ -1,0 +1,17 @@
+{% macro flashed_msg(msg,cat) %}
+    <div class="alert alert-{{ cat }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>{{ msg }}
+    </div>
+{% endmacro %}
+
+{% with msgs = get_flashed_messages(with_categories=true) %}
+    {% if msgs %}
+        {% for cat,msg in msgs %}
+            {{ flashed_msg(msg,cat) }}
+      		{% if msgs|count > 1 and not loop.last %}
+				{{'<//>'|safe}}
+      		{% endif %}
+        {% endfor %}
+    {% endif %}
+{% endwith %}

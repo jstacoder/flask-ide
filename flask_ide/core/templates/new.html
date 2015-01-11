@@ -1,0 +1,51 @@
+{% extends 't.html' %}
+    {% block footer_js %}
+        {{ super() }}
+        <script src="{{url_for('static',filename='js/main.js')}}"></script>
+    {% endblock %}
+    {% block column_5 %}
+        <ul class="nav nav-pills nav-stacked" role="tablist">
+            <li class="nav-header">Pane1 Links</li>
+            <li class="active menu1"><a role="tab" data-toggle="tab" href="#tab1">tab1</a></li>
+            <li class="menu1"><a role="ab" data-toggle="tab" href="#tab2">tab2</a></li>
+            <li class="menu1"><a role="ab" data-toggle="tab" href="#tab3">tab3</a></li>
+            <li class="menu1"><a role="ab" data-toggle="tab" href="#tab4">tab4</a></li>
+            <li class="nav-header">Pane2 Links</li>
+            <li class="active menu2"><a role="ab" data-toggle="tab" href="#tab5">tab5</a></li>
+            <li class="menu2"><a role="ab" data-toggle="tab" href="#tab6">link</a></li>
+            <li class="menu2"><a role="ab" data-toggle="tab" href="#tab7">tab7</a></li>
+            <li class="menu2"><a role="ab" data-toggle="tab" href="#tab8">tab8</a></li>
+        </ul>
+    {% endblock %}
+    {% block column_7 %}
+        <div class="tab-content" id="row1"> <!-- tabs 1,2,3,4 -->
+            <div class="tab-pane active" row="1" id="tab1"><p>some content for tab1</p>
+                {{ lipsum()|truncate(500)|safe }}
+            </div>
+            <div class="tab-pane" id="tab2" row="1"><p>Some content for tab2</p>
+                {{ lipsum()|truncate(500)|safe}}
+            </div>
+            <div class="tab-pane" id="tab3" row="1"><p>Some content for tab3</p>
+                {{ lipsum()|truncate(500)|safe}}
+            </div>
+            <div class="tab-pane" id="tab4" row="1"><p>Some content for tab4</p>
+                {{ lipsum()|truncate(500)|safe}}
+            </div>
+        </div>
+    {% endblock %}
+    {% block column_6 %}
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab5" row="2"><p>Some content for tab5</p>
+                {{ lipsum()|truncate(500)|safe}}
+            </div>
+            <div class="tab-pane" id="tab6" row="2"><p>Some content for tab6</p>
+                {{ lipsum()|truncate(500)|safe}}
+            </div>
+            <div class="tab-pane" id="tab7" row="2"><p>Some content for tab7</p>
+                {{ lipsum()|truncate(500)|safe}}
+            </div>
+            <div class="tab-pane" id="tab8" row="2"><p>Some content for tab8</p>
+                {{ lipsum()|truncate(500)|safe}}
+            </div>
+        </div>
+    {% endblock %}

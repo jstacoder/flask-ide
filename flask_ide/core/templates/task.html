@@ -1,0 +1,36 @@
+{% extends base %}
+{% macro render_checkbox(heading,tasks) %}
+    <div class="row">
+        <div class="col-md-6 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{heading}}</div>
+                        {{tasks|safe}}
+                <div class="panel-footer">
+                    <div class="progress">
+                          <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
+                        </div>
+                    </div>
+                        <p class="progress-bar-text">0% complete</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+{% block content %}
+<form action='' method='post' enctype="multipart-formdata">
+    {{ form.text(class_='form-control',cols=40,rows=5) }}
+    <input type=submit />
+</form>
+
+{% if tasks %}
+       {{ render_checkbox(title,tasks) }}
+{% endif %}
+
+{% if session.get('tasks',false)  %}
+        {{ render_checkbox(session['title'],session['tasks']) }}
+{% endif %}
+
+{% endblock %}
+{% block footer_js %}
+    <script src="{{ url_for('static',filename='js/tasks.js') }}"></script>
+{% endblock footer_js %}

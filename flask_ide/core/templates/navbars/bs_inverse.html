@@ -1,0 +1,3 @@
+{% from '_macros.html' import render_navbar with context %}
+	{% set auth = (user != none) %}
+    {{ render_navbar(brand=admin_nav_title,nav_links=admin_nav_links,dropdowns=admin_dropdowns,inverse=true,auth=auth) }}

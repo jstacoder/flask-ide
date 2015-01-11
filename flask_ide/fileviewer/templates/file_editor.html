@@ -1,0 +1,272 @@
+{% extends base or 'layout.html' %}
+{% from 'icons.html' import icon as get_icon %}
+
+{% macro render_file_list(lst,name) %}
+	<div class="well" style="height:100%;padding:10px 0px 0px 0px;">
+  	<div class="list-group" style="margin-bottom:0px;">
+    	<div class="list-group-item-heading" style="text-align:center;">
+	      	{{name|default('files in current dir')}} 
+    	</div>
+	    {% for file in lst %}
+		    {% if file != file_name.split('/')[-1] %}
+    			<a href="{{url_for('fileviewer.view_files',item_name='/'.join(map(str,request.args.get('item_name').split('/')[:-1]))+'/'+file)}}" class="list-group-item">{{file|truncate(36)}}</a>
+	    	{% endif %}
+    	{% endfor %}  				  				
+	  </div>
+	</div>
+{% endmacro %}
+
+{% macro render_breadcrumb(data) %}	
+	<ol class="breadcrumb">      	
+      <a href="{{url_for('fileviewer.view_files')}}">&nbsp;/&nbsp;</a>
+        {% set fp = '' %}
+    	{% for path in data.split('/') %}
+      		{% set fp = fp + path + '/' %}
+	      <li{% if loop.last -%} 
+                class="active"
+           	 {%- endif %}>
+             {%- if not loop.last -%}
+            	<a href="{{url_for('fileviewer.view_files',item_name=fp)}}">
+             {%- endif -%}
+                  {% if loop.last %} <span class="text-muted">&nbsp; / &nbsp;</span> {% endif %} {{path}} 
+             {%- if not loop.last -%}
+            	</a>
+             {%- endif -%}
+          </li>
+      	{%- endfor %}
+	</ol>
+{% endmacro %}
+{% macro make_parent_path(names) %}
+    {% for name in names -%}
+        {{ name }}
+        {%- if not loop.last and not name == '' -%}
+            /
+        {%- endif -%}
+    {%- endfor %}
+{% endmacro %}
+{% macro get_parent_link() %}
+    {% set name = make_parent_path(request.args.get('item_name','/').split('/')[:-1]).strip() %}
+        {% if name == 'files' %}
+            {% set name = '' %}
+        {% endif %}
+        {% if name != '' %}
+        <a id="exit-btn" class="btn btn-success" href="{{ url_for('fileviewer.view_files',item_name=name) }}">Exit</a>
+        {% else %}
+        <a id="exit-btn" class="btn btn-success" href="{{ url_for('fileviewer.view_files') }}">Exit</a>
+        {% endif %}
+{% endmacro %}
+{% macro render_bc_links(path) %}
+	{% set path_parts = path.split('/') %}
+	{% set path = '' %}
+	{% for itm in range(len(path_parts)) %}
+		{% set _path = '%s/' % path_parts.pop() %}
+		{% set path = path + _path %}
+		{{ url_for('fileviewer.view_files',item_name=path) }}
+	{% endfor %}
+{% endmacro %}
+
+{% block header %}
+    {% include _get_navbar('bootstrap-inverse') with context %}
+{% endblock %}
+{% block body %}
+{% if codemirror %}
+    {{ codemirror.include_codemirror() }}
+{% endif %}
+<style>
+  #body .well,#body .panel {
+   	box-shadow: 5px 9px 15px rgba(0, 0, 0, 0.32);
+} 
+  }
+  .navbar-left { min-width:420px;}
+    #fs { margin-top:-45px;}
+  #fs > fs { font-size:20px;}
+    .list-group-item {    
+        padding:0px 30px;
+    }
+    #body .breadcrumb {
+     	background-color:transparent; 
+    }
+    div.CodeMirror { height:400px; overflow:hidden;}
+    select#theme,select#mode {display:inline;width:80%;}
+    .CodeMirror-fullscreen {
+ 		position: fixed;
+  		top: 0; 
+      	left: 0; 
+      	right: 0; 
+      	bottom: 0;
+  		height: auto;
+  		z-index: 9;
+      	padding-top:55px;
+}
+</style>
+<div class="container-fluid">
+  {% include 'includes/_messages.html' with context %}
+    <div class="row">
+      <div class=col-md-2>
+        <div class=row>
+          <div class=col-md-12>
+        	{{render_file_list(other_files[:6],'project files')}}    
+          </div>
+          <div class=col-md-12>
+            {{render_file_list(other_files[:6],'Recent Files')}}
+          </div>
+          <div class=col-md-12>
+            {{render_file_list(other_files[:6],'Favorite Files')}}
+          </div>
+        </div>
+      </div>
+        <div class="col-md-8">
+    {% if file_content %}
+        {% set file_content = file_content.decode('utf-8','replace') %}
+        <div class="text" style="display:none;">
+            {{ file_content.decode('utf-8','ignore') }}
+        </div>
+        <form method="post" action="{{ url_for('.view_files') }}">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title inline">
+                      {{render_breadcrumb(file_name)}}    	               
+                   </h3>
+                  <button id=fs class="inline btn btn-sm btn-primary pull-right">
+                    {{ get_icon('arrows','fa') }}
+                  </button>
+              </div>
+              <div class="panel-body">
+            	{{ form.content(value=file_content) }}
+              </div>
+              <div class="panel-footer">
+            	{{ form.submit(value="save",class_='btn btn-default')}}
+            	{{ form.hidden_tag() }}
+            	{{ get_parent_link()|safe }}
+            	<label for="theme">
+            		{{ form.theme(class_="form-control",id="theme")}}{{ form.theme.label.text }}                
+            	</label>
+            	<label for="mode">                            
+            		{{ form.mode(class_="form-control",id="mode")}}{{ form.mode.label.text }}  
+				</label>
+               </div>
+            </div>
+            {{ form.test_select(class_="list-inline") }}
+        </form>          
+    {% else %}
+        {{ get_parent_link()|safe }}
+    {% endif %}
+        </div>
+      <div class="col-md-2">
+        {{render_file_list(other_files,'Files in Current Directory')}}
+      </div>
+    </div>
+</div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Confirm Save Action</h4>
+                </div>
+                <div class="modal-body">
+                    Do You Really Want To Save This File?!?!
+                </div>
+                <div class="modal-footer">
+                  <form class="form-inline" role="form">
+                  <div class="checkbox">
+                    <label class="checkbox-inline">
+  							<input type="checkbox" id="inlineCheckbox1" name=continue_edit value=0> Continue editing file
+						</label>
+                    </div>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary save-btn" id="save-btn">Save changes</button>
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+    {% block footer_js %}
+<script>  
+  	function saveDialog(e){
+     $("#myModal").modal('show').data("event",e); 
+    }
+    function setupCodemirror(elem){
+    	elem.setValue($(".text").text().trim());
+    	elem.setOption("mode","{{editor_mode}}");
+        elem.setOption("extraKeys", {
+          	"Esc":function(cm){
+             	 if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+                 if($("#save-btn-2").length){
+                  	$("#save-btn-2").remove(); 
+                 }
+            },
+            "Ctrl-J": "toMatchingTag",
+            "Ctrl-F": function(cm){
+             	 if (!cm.getOption("fullScreen")) fullScreen();
+            },
+          	"Ctrl-S": function(cm){
+             	if(cm.getOption("fullScreen")) saveDialog(cm);
+            }
+        });
+        elem.setOption("autoCloseTags",true);
+      	elem.setOption("showNumbers",true);
+      	elem.setOption("lineNumbers",true);
+      	elem.setOption("showLineNumbers",true);
+        elem.setOption("matchTags",{
+          					bothTags: true
+        				}    
+        );  
+    }
+    function fullScreen(){
+     var b = $("<li><button id='save-btn-2' type='button' class='btn btn-success navbar-btn save-btn'>save</button></li>");
+     b.insertAfter($(".navbar-left").children().eq($(".navbar-left").children().length-1));
+     editor_for_content.setOption("fullScreen",true); 
+    }
+    function makeHREF(name){
+        return "http://cdnjs.cloudflare.com/ajax/libs/codemirror/4.7.0/theme/"+name+".css";
+    }
+    
+    $(document).on("click","#fs",function(e){
+      e.preventDefault();
+      e.stopPropagation();      
+      fullScreen();
+      return false;
+    });
+    $(document).on("change","select",function(){
+            var opt = $(this).attr("id");
+            var v = $(this).val();
+            if(opt == "theme"){
+                $("link").eq($("link").length-1).attr("href",makeHREF(v));
+            }
+            editor_for_content.setOption(opt,v);
+    });
+    $(document).on("click","input[type=submit]",function(e){
+            e.preventDefault();
+            saveDialog(e);
+    });
+    $(document).on("click",".save-btn",function(e){
+            //document.forms[0].submit();
+            $.getJSON(
+                '/view_files/json',
+                 {
+                   content : editor_for_content.getValue(),
+                   file_name:"{{file_name}}",
+                   continue_edit : $("input[type=checkbox]").get(0).checked ? 1 : 0
+                }).success(function(data){
+              console.log(data);
+              if(data['success']){
+                if(data['continue_edit']) {
+                  $.getJSON('/view_files/msgs',{}).success(function(data){
+                  	  console.log(data.result.trim().split('<//>'));
+                      //console.log(JSON.parse(data));
+                  });
+                  $("#myModal").modal("hide");                  
+                } else {
+                $("<form>").attr("action","{{ url_for('.view_files',item_name=parent_path()) }}").attr("method","GET").submit();            
+                }
+              }
+            });
+    });
+  $(function(){
+    setupCodemirror(editor_for_content);
+  });
+</script>
+{% endblock %}

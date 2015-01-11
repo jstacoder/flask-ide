@@ -1,0 +1,139 @@
+{% extends base %}
+{% from '_macros.html' import modal_form with context  %}
+{% from '_macros.html' import render_modal with context  %}
+{% macro render_container(fluid=true) %}
+    <div class="container{% if fluid %}-fluid{% endif %}">
+        {{ caller() }}
+    </div>
+{% endmacro %}
+
+{% macro render_row(row_height=false) %}
+    {% if row_height %}
+        {% if not row_height.endswith('px') %}
+            {% set row_height = '%spx' % row_height %}
+        {% endif %}
+    {% endif %}
+    <div class=row{% if row_height %} style="height:{{row_height}}"{% endif %}>
+        {{ caller() }}
+    </div>
+{% endmacro %}
+
+{% macro _render_offset(num) %}
+    col-md-offset-{{num}}
+{% endmacro %}
+
+{% macro _render_push(num) %}
+    col-md-push-{{num}}
+{% endmacro %}
+
+{% macro _render_pull(num) %}
+    col-md-pull-{{num}}
+{% endmacro %}
+
+{% macro render_column(num,offset=false,push=false,pull=false,debug=false,debug_id='',base_viewport='md') %}
+    {% set alt_size = convert_size(base_viewport,num) %}
+    {% set alt_base = get_alt_base(base_viewport) %}
+    {% set alt_class = "col-%s-%s" % (alt_base,alt_size) %}
+    {% set class = "col-%s-%s %s" % (base_viewport,num,alt_class) %}
+    {% if offset %}
+        {% set class = "%s %s" % (class,_render_offset(offset)) %}
+    {% endif %}
+    {% if push %}
+        {% set class = "%s %s" % (class,_render_push(push)) %}
+    {% endif %}
+    {% if pull %}
+        {% set class = "%s %s" % (class,_render_pull(pull)) %}
+    {% endif %}
+    <div class="{{class}}">
+        {% if debug %}
+            {% set id = 'col-%s' % debug_id %}
+            <a data-toggle=modal href="#{{id}}">{{class}}</a>
+        {% endif %}
+        {{ caller() }}        
+    </div>
+{% endmacro %}
+
+{% macro get_columns(cols=[]) %}
+    {% call render_row() %}
+        {% for col in cols %}
+            {% call render_column(col) %}
+                {{ col.content }}
+            {% endcall %}
+        {% endfor %}
+    {% endcall %}    
+{% endmacro %}
+{% block body %}
+    <style>
+        @media (min-width: 600px)  {
+            .container {
+                width: 900px;
+            }
+        }
+        @media (min-width: 1700px)  {
+            .container {
+                width: 1750px;
+            }
+        }
+        .btn-default {
+            width:8.5%;
+            font-size:8.5px;
+        }
+    </style>
+    {% call render_modal('layouts') %}
+            <div class=list-group>
+                {% for layout in layouts %}
+                    <a class="list-group-item" href="{{url_for('core.show_layout',layout_name=layout)}}">{{layout.replace('_','-')}}</a>
+                {% endfor %}
+            </div>
+    {%  endcall %}
+    {% call render_modal('new',size='lg') %}
+    {% endcall %}
+    <!--<a class="btn btn-default" data-toggle=modal href="#layouts">click me</a>    -->
+    {% if add_buttons %}
+        {% set layout_count = layouts|count %}
+        {% set half = layout_count / 2 %}
+        {% for layout in layouts %}
+            {% if loop.first %}
+                <ul style="list-style-type:none;">
+            {% elif loop.index == half - 1 %}
+                </ul>
+                <ul style="list-style-type:none;">            
+            {% endif %}
+               <li style="display:inline;"><a class="btn btn-lg btn-default" data-toggle=modal data-target="#new" href="{{url_for('core.show_layout',layout_name=layout)}}">{{layout}}</a></li>   
+            {% if loop.last %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% for row in rows %}
+        {% for col in row.cols %}
+            {% set id = 'col-%s' % col._id %}
+            {{ modal_form(form,id,id) }}
+        {% endfor %}
+    {% endfor %}
+    {{ modal_form(form,form_id)}}
+    {% call render_container(fluid=false) %}
+        {% call render_row() %}
+            {% call render_column('12') %}
+                {% if rows %}
+                    {% for row in rows %}
+                        {% call render_row(row_height=row.height) %}
+                            {% for col in row.cols %}
+                                {% call render_column(**col.args) %}
+                                {% endcall %}
+                            {% endfor %}
+                        {% endcall %}
+                    {% endfor %}
+                {% endif %}
+            {% endcall %}
+        {% endcall %}
+    {% endcall %}
+    <style>
+    div { text-align:center;}
+    .row > div { border: 1px solid darkgrey;height:100%}        
+    .row { {% if height %}height:{{height}}{% else %}min-height:100px{% endif %};}    
+    div.row > div  { {% if height %}height:{{height}}{% else %}min-height:100px{% endif %};}
+    
+    </style>
+{% endblock %}            
+        

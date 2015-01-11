@@ -1,0 +1,87 @@
+
+
+
+
+
+
+
+
+{% extends base or 'layout.hmtl' %}
+    {% block content %}
+                    {% block header %}{% include _get_navbar('bootstrap-inverse') with context %}{% endblock %}
+    <div class="container-fluid wide">
+                        <div class=row>
+                                            <div class="col-md-12" >
+                                                                                                            <div class=row style="height:510px">
+                                                                                                                            <div class="col-md-2" style="height:170px">
+                                             {% block column_4 %}
+                                     {% endblock column_4 %}
+                                        
+    </div>
+                                                                                                                                <div class="col-md-2     col-md-offset-8
+" style="height:170px">
+                                             {% block column_5 %}
+                                     {% endblock column_5 %}
+                                        
+    </div>
+                                                    
+    </div>
+                                                                                    <div class=row style="height:170px">
+                                                                                                                            <div class="col-md-4" style="height:170px">
+                                             {% block column_6 %}
+                                     {% endblock column_6 %}
+                                        
+    </div>
+                                                                                                                    <div class="col-md-4" style="height:170px">
+                                             {% block column_7 %}
+                                     {% endblock column_7 %}
+                                        
+    </div>
+                                                                                                                    <div class="col-md-4" style="height:170px">
+                                             {% block column_8 %}
+                                     {% endblock column_8 %}
+                                        
+    </div>
+                                                    
+    </div>
+                                                                                    <div class=row style="height:140px">
+                                                                                                                            <div class="col-md-3" style="height:140px">
+                                             {% block column_9 %}
+                                     {% endblock column_9 %}
+                                        
+    </div>
+                                                                                                                    <div class="col-md-3" style="height:140px">
+                                             {% block column_10 %}
+                                     {% endblock column_10 %}
+                                        
+    </div>
+                                                                                                                    <div class="col-md-3" style="height:140px">
+                                             {% block column_11 %}
+                                     {% endblock column_11 %}
+                                        
+    </div>
+                                                                                                                    <div class="col-md-3" style="height:140px">
+                                             {% block column_12 %}
+                                     {% endblock column_12 %}
+                                        
+    </div>
+                                                    
+    </div>
+                                                        
+    </div>
+        
+    </div>
+    
+    </div>
+    {% endblock content %}
+    {% block extra_head %}
+    <style>
+    div { text-align:center;}
+    .row > div:not(.col-md-12) { border: 1px solid darkgrey;height:100;}        
+.row { min-height:100px;}    
+    div.row > div  { min-height:100px;}
+    @media (min-width: 600px)  {.container { width: 900px; }}
+    @media (min-width: 1700px)  {.container {width: 1750px;}}
+    .container-fluid.wide {width: 95%}
+    </style>
+    {% endblock %}

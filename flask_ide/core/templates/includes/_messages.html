@@ -1,0 +1,15 @@
+{% from 'icons.html' import icon as get_icon %}
+<div class=container>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class=flashes>
+                {% for category, message in messages %}
+                    <div class="alert alert-{{category}} alert-dismissible" id="alert">
+                        <button type="button" class="close" data-dismiss="alert">{{ get_icon('remove') }}</button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+</div>

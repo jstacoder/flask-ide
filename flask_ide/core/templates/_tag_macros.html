@@ -1,0 +1,32 @@
+{% macro div(class_) %}
+<div class="{{class_}}">
+  {{ caller() }}
+</div>
+{% endmacro %}
+
+{% macro page(fluid=true) %}
+    {% set content = caller() %}
+    {% call container(fluid) %}
+        {% call row() %}    
+            {{ content }}
+        {% endcall %}
+    {% endcall %}
+{% endmacro %}
+
+{% macro container(fluid=true) %}
+    {% set container = 'container' %}
+    {% if fluid %}
+        {% set container = 'container-fluid' %}
+    {% endif %}
+    {% set content = caller() %}
+    {% call div(container) %}
+        {{ content }}
+    {% endcall %}
+{% endmacro %}
+
+{% macro row() %}
+    {% set content = caller() %}
+    {% call div('row') %}
+        {{ content }}
+    {% endcall %}
+{% endmacro %}
