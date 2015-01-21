@@ -4,7 +4,7 @@
     core.views
     ~~~~~~~~~~
 """
-from recaptcha.client import captcha
+#from recaptcha.client import captcha
 from flask_xxl.baseviews import BaseView
 from flask import flash, redirect, request, url_for,jsonify,session
 from .forms import AddSSHServerForm, AddSSHServerAccountForm
@@ -190,31 +190,32 @@ class ContactView(BaseView):
         import datetime
         from .models import ContactMessage
         if len(request.args) > 0:
-            captcha_challenge = request.args.get('recaptcha_challenge_field',None)
-            captcha_response = request.args.get('recaptcha_response_field',None)
-            if captcha_challenge and captcha_response:
-                captcha_result = captcha.submit(
-                    captcha_challenge,
-                    captcha_response,
-                    BaseConfig.RECAPTCHA_PRIVATE_KEY,
-                    request.environ['REMOTE_ADDR']
-                )
-                if captcha_result.is_valid:
-                    message = ContactMessage()
-                    message.name = request.args['name']
-                    message.email = request.args['email']
-                    message.subject = request.args['subject']
-                    message.message = request.args['message']
-                    message.ip_address = request.environ['REMOTE_ADDR']
-                    message.save()
-                    self.flash("Thanks {} for sending us a message".format(request.args['name']),'info')
-                else:
-                    flash('bad captcha response try again','danger')
-                    error = True
-
-            else:
-                flash('please enter captcha value','warning')
-                error = True
+            #captcha_challenge = request.args.get('recaptcha_challenge_field',None)
+            #captcha_response = request.args.get('recaptcha_response_field',None)
+            #if captcha_challenge and captcha_response:
+            #    captcha_result = captcha.submit(
+            #        captcha_challenge,
+            #        captcha_response,
+            #        BaseConfig.RECAPTCHA_PRIVATE_KEY,
+            #        request.environ['REMOTE_ADDR']
+            #   )
+            
+            #if captcha_result.is_valid:
+            #        message = ContactMessage()
+            #        message.name = request.args['name']
+            #        message.email = request.args['email']
+            #        message.subject = request.args['subject']
+            #        message.message = request.args['message']
+            #        message.ip_address = request.environ['REMOTE_ADDR']
+            #        message.save()
+            #        self.flash("Thanks {} for sending us a message".format(request.args['name']),'info')
+            #    else:
+            #        flash('bad captcha response try again','danger')
+            #        error = True
+            pass
+        else:
+            flash('please enter captcha value','warning')
+            error = True
         if error:
             session['has_message_data'] = True
             session['message.name'] = request.args.get('name','')
