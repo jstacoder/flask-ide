@@ -33,3 +33,5 @@ wsgiref==0.1.2
 inflection
 recaptcha
 paramiko
+flask-macros
+
