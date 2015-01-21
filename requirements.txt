@@ -35,3 +35,4 @@ recaptcha
 paramiko
 flask-macros
 
+flask-admin==1.0.9
