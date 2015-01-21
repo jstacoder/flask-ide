@@ -51,11 +51,13 @@ class SFTPConnection(object):
             if f.startswith('.'):
                 rtn = False
         if rtn:
-            si,so,se = self._conn.exec_command('if [ -d '+ f +' ]; then echo "is dir"; else echo "is file"; fi;')
+            f = '"{}"'.format(f)
+            cmd = "python -c " + '"import os; os.path.isfile(' +"'"+ f +"'"+ ')"'
+            si,so,se = self._conn.exec_command(cmd)
             error = se.read().strip()
             if error == '':
                 res = so.read()
-                if 'file' in res:
+                if 'True' in res:
                     if search_files:
                         rtn = True
                     else:
@@ -67,7 +69,7 @@ class SFTPConnection(object):
                         rtn = True
             else:
                 raise Exception(error)            
-        return rtn
+        return res
 
     def isfile(self,f,*args,**kwargs):
         return self.is_file(f,*args,**kwargs)
@@ -109,17 +111,44 @@ class SSHFileBrowser(object):
                         host=self.host,
         )
 
+    def split_files_and_dirs(self,dirname):
+        data = self.list_dir(dirname)
+        files,dirs = [],[]
+        for itm in data:
+            tmp = dirname+'/'+itm
+            if self.is_dir(tmp):
+                dirs.append(itm)
+            else:
+                files.append((itm,tmp))
+        return files,dirs
+
+        
+
+    
+    def filter_files(files):
+        rtn = []
+        for f in files:
+            end = f.split('.')[-1]
+            if end in IGNORE_EXTENSIONS:
+                pass
+            else:            
+                rtn.append((op.basename(f),op.relpath(f)))
+        return rtn
+    
 
     def list_dir(self,d):
-        return map(
-                lambda x: x[1],
-                self.ssh.listdir(
+        try:
+            rtn = self.ssh.listdir( #map(
+                # lambda x: x[1] if len(x) >= 2 else x,
                     self.base_dir + (
                         '/' if not self.base_dir.endswith('/'
                         ) else ''
                     ) + d
                 )
-        )
+            return rtn
+        except:
+            pass
+        
 
     def is_dir(self,d):
         return self.ssh.isdir(self.base_dir + ('/' if not self.base_dir.endswith('/') else '') + d)
@@ -136,7 +165,7 @@ class SSHFileBrowser(object):
         return o.read().strip()
 
     def load_file(self,name):
-        return self.ssh.open(name,'read').read()
+        return self.ssh.sftp.open(name,'read').read()
 
     def save_file(self,name,data,append=False):
         mode = 'w'
@@ -186,7 +215,7 @@ class _SSH(object):
 
     @classmethod
     def load_file(cls,name):
-        return cls._conn.load_file(name)
+        return cls._conn.ssh.sftp.open(name,'r').read()
 
     @classmethod
     def save_file(cls,name):
@@ -219,6 +248,8 @@ def process_dirs(dirs):
 
 
 def login(user,password,host,**kwargs):
+    if 'base_dir' in kwargs:
+        kwargs.pop('base_dir')
     conn = get_connection(host,user,password,**kwargs)
     return conn
 

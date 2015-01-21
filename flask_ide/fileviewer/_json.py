@@ -3,6 +3,15 @@ from flask import jsonify,request,flash
 from flask.json import loads
 from flask.views import MethodView
 import os.path as op
+from ssh_client import login
+
+class LoginView(MethodView):
+
+    def post(self):
+        conn = login(**request.form)
+        return jsonify(data=conn)
+                
+               
 
 
 class JsonFileView(MethodView):

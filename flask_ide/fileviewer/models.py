@@ -1,4 +1,4 @@
-from main.basemodels import BaseMixin
+from flask_xxl.basemodels import BaseMixin
 from ext import db
 
 class File:

@@ -11,7 +11,9 @@ from jinja2.filters import do_filesizeformat
 # Jinja
 
 def size(pth):
-  return do_filesizeformat(os.stat(pth).st_size)
+    if op.exists(pth):
+        return do_filesizeformat(os.stat(pth).st_size)
+    return False
 
 def _sorted(value):
   return sorted(value)

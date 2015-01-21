@@ -6,6 +6,8 @@ import os
 from markdown import Markdown
 from settings import BaseConfig
 from flask.helpers import url_for
+from flask import session
+from fileviewer.handlers import handlers
 #from faker.factory import Factor
 
 
@@ -42,9 +44,13 @@ def add_urlfor():
     return {'url_for':url_for}
 
 def get_dir_files(dirname):
-    if os.path.isdir(dirname):
-        return os.listdir(dirname)
-    raise InputError
+    if 'ssh_auth' in session:
+        file_handler = handlers['ssh'](**session['ssh_auth'])
+    else: 
+        file_handler = handlers['local']
+    if file_handler.is_dir(dirname):
+        return file_handler.list_dir(dirname)
+    raise IOError
 
 def is_list(lst):
     return type(lst) == list
@@ -64,7 +70,12 @@ get_parent_path = lambda: os.path.relpath(os.curdir,start=root)
 
 
 def is_dir(name):
-    return os.path.isdir(os.path.join(ROOT_PATH,name))
+    if 'ssh_auth' in session:
+        file_handler = handlers['ssh'](**session['ssh_auth'])
+        return file_handler.is_dir(name)
+    else: 
+        file_handler = handlers['local']
+        return file_handler.is_dir(os.path.join(ROOT_PATH,name))
 
 def extract_settings(config):
     rtn = []

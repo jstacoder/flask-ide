@@ -43,14 +43,14 @@ class BaseConfig(LocalConfig):
 
     URL_MODULES = [
             'core.urls.routes',
-            'admin.urls.routes',
+            #'admin.urls.routes',
             'flask.ext.xxl.apps.auth.urls.routes',
             'fileviewer.urls.routes',
     ]
 
     BLUEPRINTS = [
-            'core.core',
-            'admin.admin',
+            'core.core',       
+            #'admin.admin',
             'flask.ext.xxl.apps.auth.auth',
             #'auth.auth',
             'fileviewer.fileviewer',
@@ -59,6 +59,7 @@ class BaseConfig(LocalConfig):
 
     EXTENSIONS = [
             #'ext.db',
+            'ext.admin',
             'ext.toolbar',
             'ext.pagedown',
             'ext.codemirror',

@@ -179,7 +179,7 @@
 {% endmacro %}
 {% macro render_dirs(names) %}
   {% set parent = request.args.get('item_name','') %} 
-    <table class="table table-bordered table-hover table-condensed dirlist hidden" id="table-dirlist" style="border: 1px solid #ddd;">
+    <table class="table table-bordered table-hover table-condensed dirlist" id="table-dirlist" style="border: 1px solid #ddd;">
       <thead>
         <tr>
           <th>Name</th>
@@ -200,7 +200,7 @@
         {% endfor %}
       </tbody>
   	</table>
-    <div class="list-group dirlist" id="grid-dirlist">        
+    <div class="list-group dirlist hidden" id="grid-dirlist">        
         {% for name in names %}
             {% if not parent == '' %}
                 {% set path = '%s/%s' % (parent.strip(),name.strip()) %}

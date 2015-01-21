@@ -28,6 +28,9 @@ class Server(Model):
     connection_type = relationship('ConnectionType')
     connection_type_id = Column(Integer,ForeignKey('connection_types.id'))
 
+    def __unicode__(self):
+        return '{} @ {}'.format(self.name,self.ip_address)
+
 class Account(Model):
 
     username = Column(String(255),nullable=False)
@@ -37,10 +40,16 @@ class Account(Model):
     base_dir = Column(String(255),nullable=False)
     last_login = Column(Date)
 
+    def __unicode__(self):
+        return '{}'.format(self.username)#,self.server.name)
+
 
 class ConnectionType(Model):
 
     name = Column(String(255),unique=True,nullable=False)
     connection_class = Column(String(255),nullable=False)
+
+    def __unicode__(self):
+        return self.name
 
 

@@ -10,6 +10,7 @@
 {% endblock %}
 {% block content %}
     <div class=col-md-8>
+                        <form action="{{ url_for('fileviewer.test') }}" method="post"><input type=submit class="btn btn-sm btn-default" value=login /></form>
     {% if accounts %}
         <table class="table table-hover table-condensed">
             <thead>
@@ -31,7 +32,7 @@
                             </td>
                         {% endfor %}
                         <td>xxx</td>
-                        <td><a href="#" class="btn btn-sm btn-default">login</a></td>
+                        <td><form action="{{ url_for('fileviewer.view_account',id_num=account.id) }}" method="post"><input type=submit class="btn btn-sm btn-default" value=login /></form></td>
                     </tr>
                 {% endfor %}
             </tbody>

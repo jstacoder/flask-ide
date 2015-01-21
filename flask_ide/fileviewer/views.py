@@ -1,8 +1,9 @@
-from main.baseviews import BaseView
+from flask_xxl.baseviews import BaseView
 from flask import request,jsonify,session
 from forms import CodeForm
 from settings import DevelopmentConfig
 from handlers import handlers
+from core.models import Account
 
 root = DevelopmentConfig.ROOT_PATH
 
@@ -17,7 +18,7 @@ def get_editor_mode(name):
         'js':'javascript',
         'txt':'text',
     }
-    return modes[name.split('.')[-1]] or 'python'
+    return modes.get(name.split('.')[-1],None) or 'python'
 
 class MsgView(BaseView):
         _template = 'messages.html'
@@ -26,6 +27,17 @@ class MsgView(BaseView):
             self.flash('just a test flash','success')
             result = self.render()
             return jsonify(result=result)
+
+class TestView(BaseView):
+    def post(self,id_num=None):
+        session.pop('ssh_auth',None) #= dict(user='root',pw='1414Wp8888!',host='174.140.227.137',base_dir='/')
+        session.pop('handler',None) 
+        return self.redirect('fileviewer.view_files')
+        if id_num is not None:
+            account = Account().query.get(id_num)
+            if account is not None:
+                session['ssh_auth'] = dict(user=account.username,pw=account.password,host=account.server.ip_address,base_dir=account.base_dir)
+                session['handler'] = 'ssh'
 
 class FileView(BaseView):
     _file_handler = None
@@ -56,16 +68,26 @@ class FileView(BaseView):
     def _save_file(self,name,content):
         return self._file_handler.save_file(name,content)
 
-    def get(self):
+    def get(self,item_name=None):
+        if item_name is not None:
+            item_name = item_name
+        if 'var' in session:
+            return 'ok'
         handler = 'local'
         if 'handler' in session:
                 handler = session['handler']
         self._file_handler = handlers[handler]
+        if 'ssh_auth' in session:
+            self._file_handler = self._file_handler(**session['ssh_auth'])
         item_name = request.args.get('item_name',None)
         if item_name is None:
             # get inital dir and file list to display
-            d = root
+            try:
+                d = self._file_handler._conn.base_dir 
+            except:
+                d = root
             self._context['files'],self._context['dirs'] = self._split_files_and_dirs(d)
+            self._context['root'] = d
         else:
             # find out if its a dir or a file
             is_file = False
@@ -82,7 +104,7 @@ class FileView(BaseView):
                 if item_name is None or item_name == '':
                     item_name = self._cur_dir()
                 self._context['other_files'] = [str(x) for x in self._list_dir(
-                    		                    self._.dir_name(item_name) or root
+                    		                    self._dir_name(item_name) or root
                                                     ) if '.' + x.split(
                                                          '.'
                                                     )[-1] in ACCEPT_EXTENSIONS\
@@ -102,6 +124,10 @@ class FileView(BaseView):
 
 
     def post(self):
+        handler = 'local'
+        if 'handler' in session:
+                handler = session['handler']
+        self._file_handler = handlers[handler]
         content = request.form.get('content')
         name = request.form.get('file_name')
         self._context['file_name'] = name

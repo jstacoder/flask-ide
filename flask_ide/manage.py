@@ -26,6 +26,48 @@ from auth.models import User
 manager = Manager(app)
 
 
+
+import os.path as op
+ 
+@manager.command
+def gather_template_files(verbose=True):
+    template_files = map(lambda x: (
+        x[0],
+        x[1],
+        open(x[0],'r').read()
+        ),map(lambda x: (
+            x.filename,
+            x.name
+            ),map(
+                app.jinja_env.get_template,
+                app.jinja_env.list_templates()
+                )
+            )
+        )
+    base = 'templates'
+    success = True
+    for location,name,text in template_files:
+        filename = op.join(base,name)
+        filedir = op.join(base,op.dirname(name))
+        if not op.exists(filedir):
+            if verbose:
+                print 'Directory path {} does not exist, creating now...\n\n'.format(filedir)
+            os.makedirs(filedir)
+            with open(filename,'w') as f:
+                try:
+                    if verbose:
+                        print 'Preparing to write file {}\n'.format(filename)
+                    f.write(text)
+                    if verbose:
+                        print 'wrote {} to file\n'.format(filename)
+                except:
+                    success = False
+                    pass
+    return success
+                
+                
+                
+
 sys.path.insert(0,os.path.join(os.path.dirname(__file__),'venv','lib','python2.7','site-packages'))
 print sys.path[0]
 
@@ -108,11 +150,11 @@ def init_data():
     user.save()
 
 class DB(object):
-    model = Model
-    squ = squ
+    Model = Model
+    sq = squ
     engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 
-manager.add_command('shell', Shell(make_context=lambda:{'app': app, 'db': DB()}))
+manager.add_command('shell', Shell(make_context=lambda:{'app': app, 'db': DB}))
 
 
 if __name__ == '__main__':

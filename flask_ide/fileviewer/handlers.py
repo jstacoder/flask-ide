@@ -1,4 +1,5 @@
 from settings import DevelopmentConfig
+from ssh_client import get_ssh_class
 import os.path as op
 import os
 
@@ -147,6 +148,9 @@ class LocalHandler(BaseFileHandler):
     def exists(name):
         return op.exists(name)
 
+ssh_handler = lambda host,user,pw,base_dir: get_ssh_class(host=host,user=user,password=pw,base_dir=base_dir)
+
 handlers = dict(
     local=LocalHandler,
+    ssh=ssh_handler,
 )

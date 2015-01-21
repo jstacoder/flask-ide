@@ -20,7 +20,8 @@ class IndexView(BaseView):
     _form = AddSSHServerForm
 
     def get(self):
-        self._context['accounts'] = Account.get_all()
+        self._context['accounts'] = Account().query.all()
+        self._context['servers'] = Server().query.all()
         return self.render()
 
     def post(self):
