@@ -1,1 +1,1 @@
-web: ./flask_ide/start.sh
+web: python ./flask_ide/manage.py runserver --port=$PORT
