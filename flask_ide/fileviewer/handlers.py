@@ -112,11 +112,11 @@ class LocalHandler(BaseFileHandler):
 
     @staticmethod
     def is_dir(item):
-        return op.isdir(item)
+        return op.isdir(item) if item else False
 
     @staticmethod
     def is_file(item):
-        return op.isfile(item)
+        return op.isfile(item) if item else False
 
     @staticmethod
     def cur_dir():
@@ -124,11 +124,11 @@ class LocalHandler(BaseFileHandler):
 
     @staticmethod
     def list_dir(dirname):
-        return os.listdir(dirname)
+        return os.listdir(dirname) if dirname else []
 
     @staticmethod
     def dir_name(item):
-        return op.dirname(op.abspath(item))
+        return op.dirname(op.abspath(item)) if item else False
 
     @staticmethod
     def load_file(name):
@@ -146,7 +146,7 @@ class LocalHandler(BaseFileHandler):
 
     @staticmethod
     def exists(name):
-        return op.exists(name)
+        return op.exists(name) if name else False
 
 ssh_handler = lambda host,user,pw,base_dir: get_ssh_class(host=host,user=user,password=pw,base_dir=base_dir)
 

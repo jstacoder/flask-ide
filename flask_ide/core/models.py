@@ -32,6 +32,8 @@ class Server(Model):
         return '{} @ {}'.format(self.name,self.ip_address)
 
 class Account(Model):
+    __table_args__ = (
+    )
 
     username = Column(String(255),nullable=False)
     password = Column(String(255),nullable=False)
@@ -45,6 +47,8 @@ class Account(Model):
 
 
 class ConnectionType(Model):
+    __table_args__ = (
+    )
 
     name = Column(String(255),unique=True,nullable=False)
     connection_class = Column(String(255),nullable=False)

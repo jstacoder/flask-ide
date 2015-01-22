@@ -44,6 +44,8 @@ def add_urlfor():
     return {'url_for':url_for}
 
 def get_dir_files(dirname):
+    if not dirname:
+        return []
     if 'ssh_auth' in session:
         file_handler = handlers['ssh'](**session['ssh_auth'])
     else: 
