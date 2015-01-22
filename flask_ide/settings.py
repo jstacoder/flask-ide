@@ -64,7 +64,7 @@ class BaseConfig(LocalConfig):
             'ext.pagedown',
             'ext.codemirror',
             'ext.alembic',
-            'ext.macro',
+            #'ext.macros',
     ]
 
     CONTEXT_PROCESSORS = [

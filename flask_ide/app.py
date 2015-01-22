@@ -7,10 +7,11 @@
     app initalization
 """
 from flask_xxl.main import AppFactory
+from flask_macros import FlaskMacro
 from settings import DevelopmentConfig
 from core.context_processors import get_navbar
 
 app = AppFactory(DevelopmentConfig).get_app(__name__)
-
+macro = FlaskMacro(app)
 from admin import *
 app.jinja_env.globals['_get_navbar'] = get_navbar

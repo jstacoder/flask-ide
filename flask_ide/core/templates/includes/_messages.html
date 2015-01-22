@@ -1,4 +1,6 @@
-{% from 'icons.html' import icon as get_icon %}
+{% macro get_icon(name,lib='glyphicon') %}
+    <span class="{{lib}} {{lib}}-{{name}}"></span>
+{% endmacro %}
 <div class=container>
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}

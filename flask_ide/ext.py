@@ -13,7 +13,6 @@ from flask.ext.codemirror import CodeMirror
 from flask.ext.pagedown import PageDown
 #from flask.ext.script import Manager
 from flask.ext.alembic import Alembic
-from flask_macros import FlaskMacro
 from flask_admin import Admin
 
 
@@ -23,7 +22,6 @@ db = SQLAlchemy()
 #db.engine.connection
 codemirror = CodeMirror()
 alembic = Alembic()
-macro = FlaskMacro()
 admin = Admin(template_mode='bootstrap3')
 # Almost any modern Flask extension has special init_app()
 # method for deferred app binding. But there are a couple of

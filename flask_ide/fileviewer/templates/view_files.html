@@ -1,5 +1,8 @@
 {% extends base or 'layout.html' %}
-{% from 'icons.html' import icon as get_icon %}
+{#{% from 'icons.html' import icon as get_icon %}#}
+{% macro get_icon(name,lib='glyphicon') %}
+    <span class="{{lib}} {{lib}}-{{name}}"></span>
+{% endmacro %}
 {% macro file_type(file_pth) %}
 	{%- if file_pth.endswith('.py') -%}
 		{%- set _type = 'python' -%}

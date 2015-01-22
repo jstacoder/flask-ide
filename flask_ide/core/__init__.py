@@ -9,7 +9,7 @@ core = Blueprint('core', __name__,
                  url_prefix='/')
 
 
-from views import *
-from errors import *
+from .views import *
+from .errors import *
 
 

@@ -34,7 +34,7 @@ wsgiref==0.1.2
 inflection
 recaptcha
 paramiko
-flask-macros
+flask-macros==0.1.5
 
 flask-admin==1.0.9
 gunicorn
