@@ -4,8 +4,7 @@ fileviewer = Blueprint('fileviewer',__name__,
                         template_folder='templates',
                         url_prefix='/view_files')
 
-from views import *
-from models import *
+from flask_ide.fileviewer.views import *
 
 
 @fileviewer.before_request

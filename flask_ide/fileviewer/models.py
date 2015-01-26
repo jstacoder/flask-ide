@@ -1,5 +1,6 @@
 from flask_xxl.basemodels import BaseMixin
-from ext import db
+import sqlalchemy.orm as orm
+import sqlalchemy as db
 
 class File:
     __table_args__ = {'abstract':True}
@@ -7,21 +8,20 @@ class File:
 
     name = db.Column(db.String(255),nullable=False)
     parent_id = db.Column(db.Integer,db.ForeignKey('directories.id'))
-    parent = db.relationship('Directory',backref=db.backref(
+    parent = orm.relationship('Directory',backref=orm.backref(
                         'files',lazy='dynamic'))
     full_path = db.Column(db.String(255),nullable=False,unique=True)
 
 
 
-class Directory(BaseMixin,db.Model):
-    __tablename__ = 'directories'
+class Directory(BaseMixin):
 
     name = db.Column(db.String(255),nullable=False)
     full_path = db.Column(db.String(255),nullable=False,unique=True)
 
 
-class TemplateFile(File,BaseMixin,db.Model):
-    __tablename__ = 'template_files'
+class TemplateFile(File,BaseMixin):
+    pass
 
-class CodeFile(File,BaseMixin,db.Model):
-    __tablename__ = 'code_files'
+class CodeFile(File,BaseMixin):
+    pass

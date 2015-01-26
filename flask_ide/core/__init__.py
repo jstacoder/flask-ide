@@ -9,7 +9,7 @@ core = Blueprint('core', __name__,
                  url_prefix='/')
 
 
-from core  import views
-from core  import errors
+from flask_ide.core import views
+from flask_ide.core import errors
 
 

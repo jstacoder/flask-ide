@@ -7,12 +7,12 @@
 #from recaptcha.client import captcha
 from flask_xxl.baseviews import BaseView
 from flask import flash, redirect, request, url_for,jsonify,session
-from core.forms import AddSSHServerForm, AddSSHServerAccountForm
+from flask_ide.core.forms import AddSSHServerForm, AddSSHServerAccountForm
 #from blog.models import Category,Tag    
-from settings import BaseConfig
+from flask_ide.settings import BaseConfig
 #from test_jinja import main,row,col
 from jinja2 import Template
-from core.models import Server, Account
+from flask_ide.core.models import Server, Account
 
 class IndexView(BaseView):
     _template = 'index.html'

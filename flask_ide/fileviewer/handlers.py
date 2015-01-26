@@ -1,5 +1,5 @@
-from settings import DevelopmentConfig
-from ssh_client import get_ssh_class
+from flask_ide.settings import DevelopmentConfig
+from flask_ide.fileviewer.ssh_client import get_ssh_class
 import os.path as op
 import os
 

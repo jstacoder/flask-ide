@@ -1,9 +1,9 @@
 from flask_xxl.baseviews import BaseView
 from flask import request,jsonify,session
-from forms import CodeForm
-from settings import DevelopmentConfig
-from handlers import handlers
-from core.models import Account
+from flask_ide.fileviewer.forms import CodeForm
+from flask_ide.settings import DevelopmentConfig
+from flask_ide.fileviewer.handlers import handlers
+from flask_ide.core.models import Account
 
 root = DevelopmentConfig.ROOT_PATH
 
