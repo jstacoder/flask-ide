@@ -1,2 +1,1 @@
-web: gunicorn -w 1 -b 0.0.0.0:$PORT flask_ide.app:app 
-
+web: flask_ide/start.sh
