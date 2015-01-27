@@ -7,7 +7,6 @@
 """
 
 from flask.ext.debugtoolbar import DebugToolbarExtension
-from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.wtf import Form
 from flask.ext.codemirror import CodeMirror
 from flask.ext.pagedown import PageDown
@@ -18,7 +17,6 @@ from flask_admin import Admin
 
 #manager = Manager()
 pagedown = PageDown()
-db = SQLAlchemy()
 #db.engine.connection
 codemirror = CodeMirror()
 alembic = Alembic()
