@@ -68,8 +68,9 @@ class BaseConfig(LocalConfig):
     ]
 
     CONTEXT_PROCESSORS = [
-            'core.context_processors.common_context',
+            #'core.context_processors.common_context',
             #'core.context_processors.common_forms',
+            'auth.context_processors.common_context',
             'auth.context_processors.user_context',
             'core.context_processors.add_is_page',
             'core.context_processors.add_is_list',
