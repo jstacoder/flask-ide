@@ -30,9 +30,9 @@ class MsgView(BaseView):
 
 class TestView(BaseView):
     def post(self,id_num=None):
-        session.pop('ssh_auth',None) #= dict(user='root',pw='1414Wp8888!',host='174.140.227.137',base_dir='/')
-        session.pop('handler',None) 
-        return self.redirect('fileviewer.view_files')
+        #session.pop('ssh_auth',None) #= dict(user='root',pw='1414Wp8888!',host='174.140.227.137',base_dir='/')
+        #session.pop('handler',None) 
+        #return self.redirect('fileviewer.view_files')
         if id_num is not None:
             account = Account().query.get(id_num)
             if account is not None:
