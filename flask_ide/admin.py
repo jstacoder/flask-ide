@@ -1,7 +1,7 @@
 from ext import admin
 from flask_admin import AdminIndexView,BaseView
 from flask_admin.contrib.sqla.view import ModelView
-from core.models import Account,Server,ConnectionType
+from flask_ide.core.models import Account,Server,ConnectionType
 from app import app
 
 class AccountAdmin(ModelView):

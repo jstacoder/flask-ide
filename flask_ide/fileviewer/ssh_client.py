@@ -168,12 +168,10 @@ class SSHFileBrowser(object):
         return self.ssh.sftp.open(name,'read').read()
 
     def save_file(self,name,data,append=False):
-        mode = 'w'
-        if append:
-            mode = 'a'
-            old_data = self.load_file(name)
-        with self.ssh.open(name,mode) as f:
-            f.write(data)
+        import StringIO
+        f = StringIO.StringIO() 
+        f.write(data)
+        self.ssh.sftp.putfo(f,name)
         return self.load_file(name) == data if not append else self.load_file(name) == old_data + data
 
     def exists(self,name):
