@@ -21,7 +21,6 @@ else:
 import urllib
 import sqlalchemy_utils as squ
 from flask.ext.alembic.cli.script import manager as alembic_manager
-from sqlalchemy import create_engine,MetaData
 from auth.models import User
 manager = Manager(app)
 
@@ -74,9 +73,9 @@ print sys.path[0]
 
 
 def get_meta():
-    from core import models
-    engine = models.Server()._engine
-    meta = models.Server.metadata
+    from flask_ide.core import models
+    engine = Model._engine
+    meta = Model.metadata
     #engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
     engine.echo = True
     meta.bind = engine
@@ -152,9 +151,8 @@ def init_data():
 class DB(object):
     Model = Model
     sq = squ
-    engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
+    engine = lambda: Model._engine(app.config['SQLALCHEMY_DATABASE_URI'])
 
-manager.add_command('shell', Shell(make_context=lambda:{'app': app, 'db': DB}))
 
 
 if __name__ == '__main__':
@@ -162,6 +160,7 @@ if __name__ == '__main__':
     manager.add_command('urls',ShowUrls())
     manager.add_command('db',alembic_manager)
     app.test_request_context().push()
-    conn = create_engine(app.config['SQLALCHEMY_DATABASE_URI']).raw_connection()
+    conn = Model._engine.raw_connection()
     conn.connection.text_factory = str
+    manager.add_command('shell', Shell(make_context=lambda:{'app': app, 'db': DB()}))
     manager.run()

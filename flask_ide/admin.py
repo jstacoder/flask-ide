@@ -10,7 +10,6 @@ class AccountAdmin(ModelView):
 
 class ServerAdmin(ModelView):
     
-    inline_models = (Account,)
 
     def __init__(self,*args,**kwargs):
         super(ServerAdmin,self).__init__(Server,*args,**kwargs)
@@ -24,6 +23,6 @@ class ConnectionTypeAdmin(ModelView):
 
 
 with app.test_request_context():
-    admin.add_view(AccountAdmin(Account().session))
-    admin.add_view(ServerAdmin(Server().session))
-    admin.add_view(ConnectionTypeAdmin(ConnectionType().session))
+    admin.add_view(AccountAdmin(Account.session))
+    admin.add_view(ServerAdmin(Server.session))
+    admin.add_view(ConnectionTypeAdmin(ConnectionType.session))

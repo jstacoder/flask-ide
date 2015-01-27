@@ -1,17 +1,20 @@
 from flask_xxl.basemodels import BaseMixin
 from flask import url_for
-from ext import db
 from LoginUtils import encrypt_password, check_password
 from sqlalchemy.ext.declarative import declared_attr
 
 #import sqlalchemy to global namespace
 
-UnicodeText,func,Enum,UniqueConstraint,DateTime,Text,Model,Column,Integer,ForeignKey,relationship,Boolean,String,backref,Table = db.UnicodeText,db.func,db.Enum,db.UniqueConstraint,db.DateTime,db.Text,db.Model,db.Column,db.Integer,db.ForeignKey,db.relationship,db.Boolean,db.String,db.backref,db.Table 
+from sqlalchemy import (
+        UnicodeText,func,Enum,UniqueConstraint,DateTime,Text,Column,Integer,
+        ForeignKey,Boolean,String,Table
+)
+from sqlalchemy.orm import relationship, backref
 
 class UnknownUser(object):
     is_unknown = True
 
-class Role(BaseMixin,Model):
+class Role(BaseMixin):
     __tablename__ = 'roles'
 
     name = Column(String(255))
@@ -20,7 +23,7 @@ class Role(BaseMixin,Model):
     can_edit = Column(Boolean,default=False,nullable=False)
     can_delete = Column(Boolean,default=False,nullable=False)
 
-class User(BaseMixin,Model):
+class User(BaseMixin):
     __tablename__ = 'users'
 
     first_name = Column(String(255),default="")

@@ -17,28 +17,14 @@ from flask_xxl.basemodels import BaseMixin as Model
 class ConnectionDict(object):
     pass
 
-class Server(Model):
-    __table_args__ = (
-        UniqueConstraint('name','ip_address'),
-    )
-    
-
-    ip_address = Column(String(20),nullable=False,unique=True)
-    name = Column(String(255),unique=True)
-    connection_type = relationship('ConnectionType')
-    connection_type_id = Column(Integer,ForeignKey('connection_types.id'))
-
-    def __unicode__(self):
-        return '{} @ {}'.format(self.name,self.ip_address)
-
 class Account(Model):
     __table_args__ = (
+        dict(extend_existing=True),
     )
 
     username = Column(String(255),nullable=False)
     password = Column(String(255),nullable=False)
     server_id = Column(Integer,ForeignKey('servers.id'))
-    server = relationship('Server',backref=backref('accounts'))
     base_dir = Column(String(255),nullable=False)
     last_login = Column(Date)
 
@@ -48,6 +34,7 @@ class Account(Model):
 
 class ConnectionType(Model):
     __table_args__ = (
+        dict(extend_existing=True),
     )
 
     name = Column(String(255),unique=True,nullable=False)
@@ -56,4 +43,19 @@ class ConnectionType(Model):
     def __unicode__(self):
         return self.name
 
+
+class Server(Model):
+    __table_args__ = (
+        UniqueConstraint('name','ip_address'),
+        dict(extend_existing=True),
+    )
+    
+
+    ip_address = Column(String(20),nullable=False,unique=True)
+    name = Column(String(255),unique=True)
+    connection_type = relationship(ConnectionType)
+    connection_type_id = Column(Integer,ForeignKey('connection_types.id'))
+
+    def __unicode__(self):
+        return '{} @ {}'.format(self.name,self.ip_address)
 
