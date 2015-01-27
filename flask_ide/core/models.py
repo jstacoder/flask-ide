@@ -25,7 +25,7 @@ class Server(Model):
     )
     
     accounts = relationship('Account',backref=backref(
-            'host',uselist=False),lazy='dynamic')
+            'server',uselist=False),lazy='dynamic')
 
     ip_address = Column(String(20),nullable=False,unique=True)
     name = Column(String(255),unique=True)
