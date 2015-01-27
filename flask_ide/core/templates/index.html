@@ -26,7 +26,7 @@
             <tbody>
                 {% for account in accounts %}
                     <tr>
-                        {% for itm in [account.server.ip_address,account.server.name,account.username,account.base_dir] %}
+                        {% for itm in [account.username,account.base_dir] %}
                             <td>
                                 {{ itm }}
                             </td>
