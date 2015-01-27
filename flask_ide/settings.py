@@ -72,15 +72,15 @@ class BaseConfig(LocalConfig):
             #'core.context_processors.common_forms',
             'auth.context_processors.common_context',
             'auth.context_processors.user_context',
-            'core.context_processors.add_is_page',
-            'core.context_processors.add_is_list',
-            'core.context_processors.add_get_button',
-            'core.context_processors.add_get_navbar',
-            'core.context_processors.add_get_icon',
-            'core.context_processors.add_urlfor',
+            'auth.context_processors.add_is_page',
+            'auth.context_processors.add_is_list',
+            'auth.context_processors.add_get_button',
+            'auth.context_processors.add_get_navbar',
+            'auth.context_processors.add_get_icon',
+            'auth.context_processors.add_urlfor',
             'make_base.base',
             'auth.context_processors.auth_context',
-            'core.context_processors.add_size_converters',
+            'auth.context_processors.add_size_converters',
 
     ]
 
