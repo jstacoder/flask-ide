@@ -150,8 +150,10 @@ def init_data():
 
 class DB(object):
     Model = Model
+    metadata = Model.metadata
     sq = squ
-    engine = lambda: Model._engine(app.config['SQLALCHEMY_DATABASE_URI'])
+    app.test_request_context().push()
+    engine = Model._engine
 
 
 
@@ -163,4 +165,10 @@ if __name__ == '__main__':
     conn = Model._engine.raw_connection()
     conn.connection.text_factory = str
     manager.add_command('shell', Shell(make_context=lambda:{'app': app, 'db': DB()}))
+    app.extensions = app.extensions or {} 
+    class O(object):
+        pass
+    db = O()
+    db.db = DB()
+    app.extensions['sqlalchemy'] = db
     manager.run()
