@@ -1,0 +1,8 @@
+{% macro icon(name,lib='glyphicon') %}
+    {% if '_' in lib %}
+        {% set lib = lib.replace('_','-') %}
+    {% endif %}
+    <span class="{{ lib }} {{ lib }}-{{ name }}"></span>
+{% endmacro %}
+
+

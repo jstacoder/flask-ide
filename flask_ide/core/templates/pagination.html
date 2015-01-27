@@ -1,0 +1,36 @@
+
+{% macro _simple_pagination(back=false,next=false,wide=true) %}
+    <nav>
+        <ul class=pager>
+            <li{% if wide %} class="previous{% if not back %} disabled{% endif %}"{% endif %}>
+                <a href="{% if back %}{{back}}{% else %}#{% endif %}">
+                    &larr; Older
+                </a>
+            </li>
+            <li{% if wide %} class="next{% if not next %} disabled{% endif %}"{% endif %}>
+                <a href="{% if next %}{{next}}{% else %}#{% endif %}">
+                    &larr; Newer
+                </a>
+            </li>
+        </ul>
+    </nav>
+{% endmacro %}
+
+{% macro _pagination() %}
+    <nav>
+        <ul class=pagination>
+            {{ caller() }}
+        </ul>
+    </nav>
+{% endmacro %}
+
+{% macro pagination(type='simple') %}
+    {% if type == 'simple' %}
+        {{ _simple_pagination(*args,**kwargs) }}
+    {% else %}
+        {% call _pagination(*args,**kwargs) %}
+            {{ 'x' }}
+        {% endcall %}
+    {% endif %}
+{% endmacro %}
+

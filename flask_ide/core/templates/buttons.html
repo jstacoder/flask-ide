@@ -1,0 +1,7 @@
+{% set _color_map = dict(blue='primary',red='danger',yellow='warning',green='success',grey='default') %}
+{% from 'icons.html' import icon as _icon %}
+{% macro button(text,color='grey',size='md',type='button',icon=false) %}
+<a href="#" type="{{ type }}" class="btn btn-{{ color }}{% if size != 'md' %} btn-{{ size }}{% endif %}">{{ text }}{% if icon %} {{ _icon(icon) }}{% endif %}</a>
+{% endmacro %}
+
+

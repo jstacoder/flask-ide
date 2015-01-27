@@ -1,0 +1,39 @@
+{% macro form_group(label=false) %}
+    <div class=form-group>
+        {% if label %}<label>{{ label }}</label>{% endif %}
+        {{ caller() }}
+    </div>
+{% endmacro %}
+
+{% macro form_tag(action='',method='post',multipart=false) %}
+    <form class=form action={{action}} method={{method}}{% if multipart %} enctype="multipart files"{% endif %}>
+        {{ caller() }}
+    </form>
+{% endmacro %}
+
+{% macro _bool_field(field,type,inline=false) %}
+    <div class={{type}}{% if inline %}-inline{% endif %}>
+        <label>
+            {{ field(**kwargs) }} {{ field.label.text }}
+        </label>
+    </div>
+{% endmacro %}
+
+{% macro _checkbox(field,inline=false) %}
+    {{ _bool_field(field,'checkbox',inline) }}
+{% endmacro %}
+
+{% macro _radio(field,inline=false) %}
+    {{ _bool_field(field,'radio',inline) }}
+{% endmacro %}
+
+{% macro radio_field(field) %}
+    {{ _radio(field) }}
+{% endmacro %}
+
+{% macro btn_group(size=false) %}
+    <div class="btn-group{% if size %} btn-group-{{size}}{% endif %}">
+        {{ caller() }}
+    </div>
+{% endmacro %}
+

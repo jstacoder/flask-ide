@@ -1,0 +1,32 @@
+{% macro div() %}
+    <div {% if 'class_' in kwargs %}class="{{ kwargs.pop('class_') }}"{% endif %}>
+        {{ caller() }}
+    </div>
+{% endmacro %}
+
+{% macro container(fluid=true) %}
+    {% set cls = 'container' %}
+    {% if fluid %}
+        {% set cls = cls + '-fluid' %}
+    {% endif %}
+    {% set caller_ = caller %}
+    {% call div(class_=cls) %}
+        {{ caller_() }}
+    {% endcall %}
+{% endmacro %}
+
+{% macro row() %}
+    {% set caller_ = caller %}
+    {% call div(class_="row") %}
+        {{ caller_() }}
+    {% endcall %}
+{% endmacro %}
+
+{% macro column() %}
+    {% set caller_ = caller %}
+    {% call div(**kwargs) %}
+        {{ caller_() }}
+    {% endcall %}
+{% endmacro %}
+
+
