@@ -11,7 +11,10 @@ class LoginView(MethodView):
         conn = login(**request.form)
         return jsonify(data=conn)
                 
-               
+def save_file(name,content):
+    with open(name,'w') as f:
+        f.write(content)
+    return op.isfile(name) and open(name,'r').read() == content
 
 
 class JsonFileView(MethodView):
@@ -33,12 +36,22 @@ class JsonCodeView(MethodView):
         content = request.args.get('content',None)
         file_name = request.args.get('file_name',None)
         continue_edit = int(request.args.get('continue_edit',0))
-        with open(file_name,'w') as f:
-            f.write(content)
-        success = op.isfile(file_name) and\
-                open(file_name,'r').read() == content
+        success = save_file(file_name,content)
         if success:
             flash(self._SUCCESS_MESSAGE.format(file_name),'success')
         else:
             flash(self._ERROR_MESSAGE.format(file_name),'danger')
         return jsonify(dict(success=success,continue_edit=bool(continue_edit)))
+
+    def post(self):
+        file_name = request.args.get('file_name',None)
+        content = request.form.get('content',None)
+        continue_edit = request.form.get('continue_edit',None)
+        success = save_file(file_name,content)
+        if success:
+            flash(self._SUCCESS_MESSAGE.format(file_name),'success')
+        else:
+            flash(self._ERROR_MESSAGE.format(file_name),'danger')
+        return jsonify(dict(success=success,continue_edit=bool(continue_edit)))
+
+

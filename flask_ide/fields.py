@@ -14,4 +14,4 @@ class TagField(Field):
             self.data = [x.strip() for x in valuelist[0].split(',')]
         else:
             self.data = []
-            
+      

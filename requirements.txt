@@ -35,6 +35,6 @@ inflection
 recaptcha
 paramiko
 flask-macros==0.1.5
-
+gevent
 flask-admin==1.0.9
 gunicorn

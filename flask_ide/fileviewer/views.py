@@ -1,11 +1,12 @@
 from flask_xxl.baseviews import BaseView
-from flask import request,jsonify,session
+from flask import request,jsonify,session,flash
 from flask_ide.fileviewer.forms import CodeForm
 from flask_ide.settings import DevelopmentConfig
 from flask_ide.fileviewer.handlers import handlers
 from flask_ide.core.models import Account
 
 root = DevelopmentConfig.ROOT_PATH
+
 
 IGNORE_EXTENSIONS = ['pyc','swp','db','pid','zip']
 ACCEPT_EXTENSIONS = ['.py','.html','.css','.js','.sh']
@@ -24,20 +25,18 @@ class MsgView(BaseView):
         _template = 'messages.html'
 
         def get(self):
-            self.flash('just a test flash','success')
+            flash('just a test flash','success')
             result = self.render()
             return jsonify(result=result)
 
 class TestView(BaseView):
     def post(self,id_num=None):
-        #session.pop('ssh_auth',None) #= dict(user='root',pw='1414Wp8888!',host='174.140.227.137',base_dir='/')
-        #session.pop('handler',None) 
-        #return self.redirect('fileviewer.view_files')
         if id_num is not None:
             account = Account().query.get(id_num)
             if account is not None:
                 session['ssh_auth'] = dict(user=account.username,pw=account.password,host=account.server.ip_address,base_dir=account.base_dir)
                 session['handler'] = 'ssh'
+        return self.redirect('fileviewer.view_files')
 
 class FileView(BaseView):
     _file_handler = None
@@ -112,6 +111,9 @@ class FileView(BaseView):
                                                          '.'
                                                     ) and self._is_file(x)
                                                ]
+                self._context['other_dirs'] = [str(x) for x in self._list_dir(
+                    		                    self._dir_name(self._dir_name(item_name)) or root
+                                               ) if self._is_dir(x)]
                 if len(item_name.split('/')) == 2 and not all(item_name.split('/')):
                     if item_name.startswith('/'):
                         item_name = item_name[1:]

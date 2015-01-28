@@ -16,6 +16,20 @@
 	</div>
 {% endmacro %}
 
+{% macro render_dir_list(lst,name=false) %}
+	<div class="well" style="height:100%;padding:10px 0px 0px 0px;">
+  	<div class="list-group" style="margin-bottom:0px;">
+    	<div class="list-group-item-heading" style="text-align:center;">
+	      	{{name|default('local dirs')}} 
+    	</div>
+	    {% for d in lst %}
+        	{% set item = [request.args.get('item_name').rsplit('/',2)[0],d] | join('/') %}
+             <a href="{{ url_for('.view_files',item_name=item) }}" class="list-group-item">{{item|truncate(36)}}</a>
+    	{% endfor %}  				  				
+	  </div>
+	</div>
+{% endmacro %}
+
 {% macro render_breadcrumb(data) %}	
 	<ol class="breadcrumb">      	
       <a href="{{url_for('fileviewer.view_files')}}">&nbsp;/&nbsp;</a>
@@ -108,7 +122,7 @@
         	{{render_file_list(other_files[:6],'project files')}}    
           </div>
           <div class=col-md-12>
-            {{render_file_list(other_files[:6],'Recent Files')}}
+            {{render_dir_list(other_dirs,'local dirs')}}
           </div>
           <div class=col-md-12>
             {{render_file_list(other_files[:6],'Favorite Files')}}
@@ -157,6 +171,13 @@
       </div>
     </div>
 </div>
+{% for d in other_dirs %}
+	{% set item = [request.args.get('item_name').rsplit('/',2)[0],d] | join('/') %}
+    {{ url_for('.view_files',item_name=item) }}<br />
+    <a href="{{ url_for('.view_files',item_name=item) }}">{{item}}</a>
+	{{ item }}
+{% endfor %}
+
   <!-- Modal -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -244,19 +265,21 @@
     });
     $(document).on("click",".save-btn",function(e){
             //document.forms[0].submit();
-            $.getJSON(
-                '/view_files/json',
+            $.post(
+                    '/view_files/json?file_name={{file_name}}',
                  {
                    content : editor_for_content.getValue(),
-                   file_name:"{{file_name}}",
+                     //{#file_name:"{{file_name}}",#}
                    continue_edit : $("input[type=checkbox]").get(0).checked ? 1 : 0
                 }).success(function(data){
-              console.log(data);
+              //console.log(data);
               if(data['success']){
                 if(data['continue_edit']) {
                   $.getJSON('/view_files/msgs',{}).success(function(data){
                   	  console.log(data.result.trim().split('<//>'));
-                      //console.log(JSON.parse(data));
+                      $(data.result.trim().split('<//>')[0]).insertAfter($(".navbar"));
+                      var closer = function(seconds){ setTimeout(function(){$(".alert").alert('close');},seconds*1000);};
+                      closer(3);                                                              
                   });
                   $("#myModal").modal("hide");                  
                 } else {
