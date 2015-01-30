@@ -23,6 +23,6 @@ class ConnectionTypeAdmin(ModelView):
 
 
 with app.test_request_context():
-    admin.add_view(AccountAdmin(Account.session))
+    #admin.add_view(AccountAdmin(Account.session))
     admin.add_view(ServerAdmin(Server.session))
     admin.add_view(ConnectionTypeAdmin(ConnectionType.session))
