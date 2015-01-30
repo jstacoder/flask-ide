@@ -4,7 +4,7 @@
 #####SSH Support (planned)
 #####Support for multiple login accounts and base directorys per SSH server (planned)
 
-i now have a live [demo](https://flask-ide-readonly.herokuapp.com) running in readonly mode,check it out. 
+i now have a live [demo](http://flask-ide-readonly.herokuapp.com/view_files) running in readonly mode,check it out. 
 
 currently only actully supports editing files local to flask-ide's install, but full local filesystem editing will be added soon, and so will connecting to servers via ssh. keep checking back 
 
