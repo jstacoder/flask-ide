@@ -12,7 +12,21 @@ from LoginUtils import check_password as check_password_hash
 import sys
 import os
 from flask_xxl.basemodels import BaseMixin as Model 
+from datetime import datetime
+from flask import request
 
+class ConnectionRecord(Model):
+    __table_args__ = (
+        dict(extend_existing=True),
+    )
+    # keep track of people connecting
+    ip_address = Column(String(15),nullable=False)
+    date = Column(Date,default=datetime.now)
+
+    def __init__(self):
+        self.ip_address = request.remote_addr
+        self.session.add(self)
+        self.session.commit()
 
 class ConnectionDict(object):
     pass
@@ -25,7 +39,7 @@ class Server(Model):
     )
     
     accounts = relationship('Account',backref=backref(
-            'server',uselist=False),lazy='dynamic')
+            'server'),lazy='dynamic')
 
     ip_address = Column(String(20),nullable=False,unique=True)
     name = Column(String(255),unique=True)
@@ -46,7 +60,6 @@ class Account(Model):
     server_id = Column(Integer,ForeignKey('servers.id'))
     base_dir = Column(String(255),nullable=False)
     last_login = Column(Date)
-    server_id = Column(Integer,ForeignKey('servers.id'))
 
     def __unicode__(self):
         return '{}'.format(self.username)#,self.server.name)
