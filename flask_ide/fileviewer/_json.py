@@ -4,6 +4,7 @@ from flask.json import loads
 from flask.views import MethodView
 import os.path as op
 from ssh_client import login
+from flask import current_app
 
 class LoginView(MethodView):
 
@@ -12,9 +13,10 @@ class LoginView(MethodView):
         return jsonify(data=conn)
                 
 def save_file(name,content):
-    with open(name,'w') as f:
-        f.write(content)
-    return op.isfile(name) and open(name,'r').read() == content
+    if not current_app.config.get('FILEVIEWER_READONLY'):
+        with open(name,'w') as f:
+            f.write(content)
+    return (op.isfile(name) and open(name,'r').read() == content) if not current_app.config.get('FILEVIEWER_READONLY') else True
 
 
 class JsonFileView(MethodView):

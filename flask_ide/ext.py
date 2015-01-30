@@ -13,8 +13,10 @@ from flask.ext.pagedown import PageDown
 #from flask.ext.script import Manager
 from flask.ext.alembic import Alembic
 from flask_admin import Admin
+from flask_macros import FlaskMacro
 
 
+macro = FlaskMacro()
 #manager = Manager()
 pagedown = PageDown()
 #db.engine.connection

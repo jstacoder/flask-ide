@@ -19,6 +19,7 @@ class BaseConfig(LocalConfig):
     ]
     
     SQLALCHEMY_TRACK_MODIFICATIONS = False   
+    FILEVIEWER_READONLY = True
 
     ADMIN_PER_PAGE = 5
     mixedmode = {"name":"htmlmixed"}
@@ -64,7 +65,7 @@ class BaseConfig(LocalConfig):
             'ext.pagedown',
             'ext.codemirror',
             'ext.alembic',
-            #'ext.macros',
+            #'ext.macro',
     ]
 
     CONTEXT_PROCESSORS = [

@@ -28,6 +28,11 @@ manager = Manager(app)
 
 import os.path as op
  
+
+@manager.command
+def show_templates():
+    print '\n'.join(sorted(app.jinja_env.list_templates()))
+
 @manager.command
 def gather_template_files(verbose=True):
     template_files = map(lambda x: (
