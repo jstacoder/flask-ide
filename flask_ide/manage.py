@@ -167,8 +167,8 @@ if __name__ == '__main__':
     manager.add_command('urls',ShowUrls())
     manager.add_command('db',alembic_manager)
     app.test_request_context().push()
-    conn = Model._engine.raw_connection()
-    conn.connection.text_factory = str
+    #conn = Model._engine.raw_connection()
+    #conn.connection.text_factory = str
     #manager.add_command('shell', Shell(make_context=lambda:{'app': app, 'db': DB()}))
     app.extensions = app.extensions or {} 
     class O(object):
