@@ -36,8 +36,7 @@
         {% set fp = '' %}
     	{% for path in data.split('/') %}
       		{% set fp = fp + path + '/' %}
-	      <li{% if loop.last -%} 
-                class="active"
+	      <li{% if loop.last %} class="active"
            	 {%- endif %}>
              {%- if not loop.last -%}
             	<a href="{{url_for('fileviewer.view_files',item_name=fp)}}">
