@@ -25,3 +25,7 @@ the filesystem viewer
 and the editor (built on top of flask-codemirror)
 
 <img src="./images/fileviewer_edit_files.png" />
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/jstacoder/flask-ide/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
