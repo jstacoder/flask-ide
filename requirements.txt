@@ -3,7 +3,7 @@ Flask==0.10.1
 Flask-Admin==1.0.9
 Flask-Alembic==1.0.2
 Flask-DebugToolbar==0.9.2
--e git+/root/projects/github/flask-ide-ro/../flask-ide@3b602f3f547d13b789ea37a7236bd550832513e1#egg=Flask_Ide-heroku/master
+#-e git+/root/projects/github/flask-ide-ro/../flask-ide@3b602f3f547d13b789ea37a7236bd550832513e1#egg=Flask_Ide-heroku/master
 Flask-PageDown==0.1.5
 Flask-SQLAlchemy==2.0
 Flask-Script==2.0.5
