@@ -1,5 +1,6 @@
 from flask_ide.settings import DevelopmentConfig
 from flask_ide.fileviewer.ssh_client import get_ssh_class
+from pathlib import Path
 import os.path as op
 import os
 
@@ -117,6 +118,10 @@ class LocalHandler(BaseFileHandler):
     @staticmethod
     def is_file(item):
         return op.isfile(item) if item else False
+
+    @staticmethod
+    def create_file(name):
+        Path(name).touch()
 
     @staticmethod
     def cur_dir():

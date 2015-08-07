@@ -13,5 +13,4 @@ from auth.context_processors import get_navbar
 
 app = AppFactory(DevelopmentConfig).get_app(__name__)
 macro = FlaskMacro(app)
-#from admin import admin
 app.jinja_env.globals['_get_navbar'] = get_navbar
