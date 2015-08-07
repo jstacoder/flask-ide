@@ -36,8 +36,7 @@
         {% set fp = '' %}
     	{% for path in data.split('/') %}
       		{% set fp = fp + path + '/' %}
-	      <li{% if loop.last -%} 
-                class="active"
+	      <li{% if loop.last %} class="active"
            	 {%- endif %}>
              {%- if not loop.last -%}
             	<a href="{{url_for('fileviewer.view_files',item_name=fp)}}">
@@ -56,7 +55,7 @@
         {%- if not loop.last and not name == '' -%}
             /
         {%- endif -%}
-    {%- endfor %}
+    {%- endfor -%}
 {% endmacro %}
 {% macro get_parent_link() %}
     {% set name = make_parent_path(request.args.get('item_name','/').split('/')[:-1]).strip() %}
@@ -78,7 +77,6 @@
 		{{ url_for('fileviewer.view_files',item_name=path) }}
 	{% endfor %}
 {% endmacro %}
-
 {% block header %}
     {% include _get_navbar('bootstrap-inverse') with context %}
 {% endblock %}
@@ -87,12 +85,16 @@
     {{ codemirror.include_codemirror() }}
 {% endif %}
 <style>
-  #body .well,#body .panel {
-   	box-shadow: 5px 9px 15px rgba(0, 0, 0, 0.32);
-} 
-  }
-  .navbar-left { min-width:420px;}
-    #fs { margin-top:-45px;}
+  #body .well,
+  #body .panel {
+           	box-shadow: 5px 9px 15px rgba(0, 0, 0, 0.32);
+  } 
+  .navbar-left {
+   min-width:420px;
+   }
+   #fs {
+    margin-top:-45px;
+   }
   #fs > fs { font-size:20px;}
     .list-group-item {    
         padding:0px 30px;
@@ -278,12 +280,26 @@
                   $.getJSON('/view_files/msgs',{}).success(function(data){
                   	  console.log(data.result.trim().split('<//>'));
                       $(data.result.trim().split('<//>')[0]).insertAfter($(".navbar"));
-                      var closer = function(seconds){ setTimeout(function(){$(".alert").alert('close');},seconds*1000);};
+                      var closer = function(seconds){ 
+                        setTimeout(
+                            function(){
+                                $(".alert").alert('close');
+                             },seconds*1000);
+                      };
                       closer(3);                                                              
                   });
                   $("#myModal").modal("hide");                  
                 } else {
-                $("<form>").attr("action","{{ url_for('.view_files',item_name=parent_path()) }}").attr("method","GET").submit();            
+                $("<form>")
+                    .attr(
+                        "action",
+                        "{{ url_for('.view_files',item_name=parent_path()) }}"
+                     )
+                     .attr(
+                        "method",
+                        "GET"
+                     )
+                     .submit();            
                 }
               }
             });

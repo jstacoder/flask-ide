@@ -1,8 +1,5 @@
 {% extends base or 'layout.html' %}
-{#{% from 'icons.html' import icon as get_icon %}#}
-{% macro get_icon(name,lib='glyphicon') %}
-    <span class="{{lib}} {{lib}}-{{name}}"></span>
-{% endmacro %}
+{% from 'icons.html' import icon as get_icon %}
 {% macro file_type(file_pth) %}
 	{%- if file_pth.endswith('.py') -%}
 		{%- set _type = 'python' -%}
@@ -127,15 +124,21 @@
     		</ul>
 		</div>
 {% endmacro %}
-
-
 {% macro render_grid_filelist(files) %}
 		<div class="filelist hidden" id="grid-filelist">
-            <div class="list-group inline">
+            <div class=row>
                 {% for name,link in files %}
-                    {% if loop.index % 4 == 0 %}
+                    {% if loop.first %}
+                        <div class=col-md-3>
+                            <div class="list-group inline">
+                    {% elif loop.index % 4 == 0 and not loop.last %}
+                            </div>
                         </div>
-                        <div class="list-group inline">
+                        <div class=col-md-3>
+                          <div class="list-group inline">
+                    {% elif loop.last %}
+                          </div>
+                        </div>
                     {% endif %}
                     {% call get_url_link(link,class_='list-group-item inline') %}
                         {{name}}
@@ -251,8 +254,7 @@
     margin-bottom:-25px;
   }
   .filelist table td {
-   	
-    
+    cursor:pointer; 
   }
   
  .CodeMirror-fullscreen {
@@ -487,6 +489,15 @@ $(function(){
       );
   });
   $(document).on("click",".genericon-search",function(){
+        var path = $(this).parent().attr("data-path");
+        console.log(path.split('/'));
+        var content = $.get(SCRIPT_ROOT+"view_files/file/"+path).success(function(r){
+            $(".modal-body").empty().html(r['content']);
+            $("#myModalLabel").empty().text("/"+path);
+            $("#myModal").modal();        
+        });
+   	});
+  $(document).on("click","td.show-file.info",function(){
         var path = $(this).parent().attr("data-path");
         console.log(path.split('/'));
         var content = $.get(SCRIPT_ROOT+"view_files/file/"+path).success(function(r){

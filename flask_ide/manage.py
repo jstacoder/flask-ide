@@ -21,7 +21,7 @@ else:
 import urllib
 import sqlalchemy_utils as squ
 from flask.ext.alembic.cli.script import manager as alembic_manager
-from auth.models import User
+from flask_xxl.apps.auth.models import User
 manager = Manager(app)
 
 
@@ -167,9 +167,9 @@ if __name__ == '__main__':
     manager.add_command('urls',ShowUrls())
     manager.add_command('db',alembic_manager)
     app.test_request_context().push()
-    conn = Model._engine.raw_connection()
-    conn.connection.text_factory = str
-    manager.add_command('shell', Shell(make_context=lambda:{'app': app, 'db': DB()}))
+    #conn = Model._engine.raw_connection()
+    #conn.connection.text_factory = str
+    #manager.add_command('shell', Shell(make_context=lambda:{'app': app, 'db': DB()}))
     app.extensions = app.extensions or {} 
     class O(object):
         pass

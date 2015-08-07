@@ -61,7 +61,7 @@ class BaseConfig(LocalConfig):
     EXTENSIONS = [
             #'ext.db',
             'ext.admin',
-            'ext.toolbar',
+            #'ext.toolbar',
             'ext.pagedown',
             'ext.codemirror',
             'ext.alembic',
