@@ -21,11 +21,8 @@ else:
 import urllib
 import sqlalchemy_utils as squ
 from flask.ext.alembic.cli.script import manager as alembic_manager
-from flask_xxl.apps.auth.models import User
+from .auth.models import User
 manager = Manager(app)
-
-
-
 import os.path as op
  
 
