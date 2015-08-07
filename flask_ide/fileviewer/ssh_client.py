@@ -56,7 +56,7 @@ class SFTPConnection(object):
         cmd = 'python -c "import os; print os.path.realpath('+repr(fname)+')"'
         si,so,se = self._conn.exec_command(cmd)
         return so.read().strip()
-        
+
     def _get_real_mode(self,fname,search_files=True,hidden=False):
         mode = None
         rtn = True
@@ -93,7 +93,7 @@ class SFTPConnection(object):
     def listdir(self,name='.'):
         add_ = lambda itm: os.path.join(itm[0],itm[1])
         #    #rtn = a + b if a.endswith('/') else os.path.join(a,b)
-        #    #return os.path.join(itm[0],itm[1])                
+        #    #return os.path.join(itm[0],itm[1])
         if self.is_dir(name):
             res = self._sftp.listdir(name)
             if name != '.':
@@ -136,10 +136,9 @@ class SSHFileBrowser(object):
             end = f.split('.')[-1]
             if end in IGNORE_EXTENSIONS:
                 pass
-            else:            
+            else:
                 rtn.append((op.basename(f),op.relpath(f)))
         return rtn
-    
 
     def list_dir(self,d):
         try:
@@ -153,7 +152,7 @@ class SSHFileBrowser(object):
             return rtn
         except:
             pass
-        
+
 
     def is_dir(self,d):
         return self.ssh.isdir(self.base_dir + ('/' if not self.base_dir.endswith('/') else '') + d)
@@ -195,7 +194,7 @@ class _SSH(object):
     @classmethod
     def split_files_and_dirs(cls,name):
         return cls._conn.split_files_and_dirs(name)
-        
+
     @classmethod
     def is_dir(cls,name):
         return cls._conn.is_dir(name)
@@ -261,7 +260,7 @@ def _sftp():
     sleep(5)
     sftp = get_sftp(rtn)
     return sftp
-   
+
 def _get_mode(_conn,fname):
     cmd = "stat --format=%f {}".format(fname)
     print 'executing',cmd
@@ -293,12 +292,11 @@ def dir_name(item,conn):
     cmd = 'python -c "import os; print os.path.dirname(os.path.abspath('+repr(item)+'))"'
     i,o,e = conn.exec_command(cmd)
     return o.read().strip()
-    
 
 def listdir(conn,name='.'):
     add_ = lambda itm: os.path.join(itm[0],itm[1])
     #    #rtn = a + b if a.endswith('/') else os.path.join(a,b)
-    #    #return os.path.join(itm[0],itm[1])                
+    #    #return os.path.join(itm[0],itm[1])
     if is_dir(name):
         res = self._sftp.listdir(name)
         if name != '.':
@@ -309,14 +307,12 @@ def listdir(conn,name='.'):
         rtn = name
     return rtn
 
-
 def main():
     if len(sys.argv) > 1:
         dirname = sys.argv[1]
     else:
         dirname = None
 
-    
     sftp = get_sftp(conn)
     rtn = map(lambda x: os.path.join(dirname or '',x),sftp.listdir() if dirname is None else sftp.listdir(dirname))
     return '\n'.join(map(str,map(lambda x: check_type(conn,x),map(lambda x: dir_name(x,conn),rtn))))
