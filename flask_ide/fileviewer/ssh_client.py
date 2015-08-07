@@ -56,7 +56,7 @@ class SFTPConnection(object):
         cmd = 'python -c "import os; print os.path.realpath('+repr(fname)+')"'
         si,so,se = self._conn.exec_command(cmd)
         return so.read().strip()
-        
+
     def _get_real_mode(self,fname,search_files=True,hidden=False):
         mode = None
         rtn = True
