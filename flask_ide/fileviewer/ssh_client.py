@@ -316,7 +316,7 @@ def main():
     else:
         dirname = None
 
-    conn = login('root','1414WP8888!!','174.140.227.137')
+    
     sftp = get_sftp(conn)
     rtn = map(lambda x: os.path.join(dirname or '',x),sftp.listdir() if dirname is None else sftp.listdir(dirname))
     return '\n'.join(map(str,map(lambda x: check_type(conn,x),map(lambda x: dir_name(x,conn),rtn))))
