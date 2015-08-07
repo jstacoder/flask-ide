@@ -3,18 +3,21 @@
 """
     core blueprint for flask-cms
 """
+import sys
+import os
 
 from sqlalchemy.ext.declarative import declared_attr,declarative_base
-from sqlalchemy import UniqueConstraint,Column,Integer,Text,String,Date,DateTime,ForeignKey,func,create_engine
+from sqlalchemy import (
+        UniqueConstraint,Column,Integer,
+        Text,String,Date,DateTime,ForeignKey,
+        func,create_engine
+)
 from sqlalchemy.orm import backref, relationship,sessionmaker, scoped_session
 from LoginUtils import encrypt_password as generate_password_hash
 from LoginUtils import check_password as check_password_hash
-import sys
-import os
 from flask_xxl.basemodels import BaseMixin as Model 
 from datetime import datetime
 from flask import request
-from flask_xxl.apps.auth.models import User
 
 class ConnectionRecord(Model):
     # keep track of people connecting
