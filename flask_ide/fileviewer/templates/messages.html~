@@ -1,7 +1,7 @@
 {% macro flashed_msg(msg,cat) %}
     <div class="alert alert-{{ cat }} alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>{{ msg }}</strong>
+        <strong>{{ msg }}
     </div>
 {% endmacro %}
 
