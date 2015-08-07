@@ -21,7 +21,6 @@ else:
 import urllib
 import sqlalchemy_utils as squ
 from flask.ext.alembic.cli.script import manager as alembic_manager
-from .auth.models import User
 manager = Manager(app)
 import os.path as op
  
@@ -132,6 +131,7 @@ def show_routes():
 
 @manager.command
 def init_data():
+    from auth.models import User
     if prompt_bool('Do you want to kill your db?'):
         if squ.database_exists(app.config['SQLALCHEMY_DATABASE_URI']):
             squ.drop_database(app.config['SQLALCHEMY_DATABASE_URI'])
