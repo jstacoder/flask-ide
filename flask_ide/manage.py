@@ -150,7 +150,7 @@ def init_data():
     seed_db()
     user = User().query.filter(User.email=='kyle@level2designs.com').first()
     if user is None:
-       user = User(username='kyle', email='kyle@level2designs.com', password='14wp88')
+       user = User(username='admin', email='kyle@level2designs.com', password='admin')
     user.save()
 
 class DB(object):
