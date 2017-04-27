@@ -1,8 +1,8 @@
-##Flask-Ide
-####A Full Featured in browser IDE 
+## Flask-Ide
+#### A Full Featured in browser IDE 
 
-#####SSH Support (planned)
-#####Support for multiple login accounts and base directorys per SSH server (planned)
+##### SSH Support (planned)
+##### Support for multiple login accounts and base directorys per SSH server (planned)
 
 i now have a live [demo](http://web-ide.jstacoder-apps.com/view_files) running in readonly mode,check it out. 
 
