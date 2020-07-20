@@ -4,7 +4,7 @@
 ##### SSH Support (planned)
 ##### Support for multiple login accounts and base directorys per SSH server (planned)
 
-i now have a live [demo](http://web-ide.jstacoder-apps.com/view_files) running in readonly mode,check it out. 
+i now have a live [demo](http://my-web-ide.herokuapp.com/view_files) running in readonly mode,check it out. 
 
 in the demo:
 
