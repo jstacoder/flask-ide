@@ -8,7 +8,7 @@ Flask-PageDown==0.1.5
 Flask-SQLAlchemy==2.0
 Flask-Script==2.0.5
 Flask-WTF==0.10.2
-Jinja2==2.7.3
+Jinja2==2.11.3
 LoginUtils==1.0.1
 Mako==1.0.0
 Markdown==2.5.2
