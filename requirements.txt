@@ -31,7 +31,7 @@ gevent==1.0.1
 greenlet==0.4.5
 gunicorn==19.2.0
 inflection==0.2.1
-ipython==2.4.0
+ipython==7.16.3
 itsdangerous==0.24
 jinja2-highlight==0.6.1
 markdown-checklist==0.4.1
