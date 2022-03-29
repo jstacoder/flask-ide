@@ -36,7 +36,7 @@ itsdangerous==0.24
 jinja2-highlight==0.6.1
 markdown-checklist==0.4.1
 mr.bob2==0.2.3
-paramiko==1.15.2
+paramiko==2.10.1
 pycrypto==2.6.1
 recaptcha==1.0rc1
 requests==2.5.1
